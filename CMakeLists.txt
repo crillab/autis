@@ -138,9 +138,9 @@ set(LIBRARY_NAME otis)
 
 
 # Adding the library to the build targets.
-add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS} otis/xcsp/OtisXcspCallback.cpp otis/xcsp/OtisXcspCallback.hpp otis/xcsp/OtisXcspCallback.cpp otis/xcsp/OtisXcspCallback.hpp otis/util/except.hpp otis/util/except.cpp otis/xcsp/OtisParseListenerAdapter.cpp otis/xcsp/OtisParseListenerAdapter.hpp otis/xcsp/IOtisParseListener.hpp)
+add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-link_libraries(${LIBRARY_NAME} xcsp3parser universe)
+link_libraries(${LIBRARY_NAME} xcsp3parser universe except)
 
 if (WIN32)
     install(TARGETS ${LIBRARY_NAME}

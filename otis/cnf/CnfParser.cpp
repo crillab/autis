@@ -1,6 +1,6 @@
 #include "CnfParser.h"
 
-#include "../util/except.h"
+#include "../../libs/exception/except/except.hpp"
 
 using namespace std;
 using namespace Otis;
@@ -63,7 +63,7 @@ void CnfParser::parse() {
 
     if (nbClausesRead != numberOfConstraints) {
         // The number of read clauses is not the expected one.
-        throw ParseException("Unexpected number of clauses");
+        throw Except::ParseException("Unexpected number of clauses");
     }
 
     listener.endParse();

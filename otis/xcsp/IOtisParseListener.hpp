@@ -26,9 +26,8 @@
 * @date 18/09/22
 * @file IOtisParseListener.hpp
 * @brief
-* @licence This project is released under the GNU LGPL3 License.
+* @license This project is released under the GNU LGPL3 License.
 */
-
 
 #ifndef OTIS_OTISPARSELISTENER_HPP
 #define OTIS_OTISPARSELISTENER_HPP

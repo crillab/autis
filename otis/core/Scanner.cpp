@@ -2,8 +2,8 @@
 #include <limits>
 
 #include "Scanner.h"
+#include "../../libs/exception/except/except.hpp"
 
-#include "../util/except.h"
 
 using namespace std;
 using namespace Otis;
@@ -61,7 +61,7 @@ void Scanner::read(long long &value) {
 
     // Making sure that at least one digit is present in the number.
     if (eof() || !isdigit(c)) {
-        throw ParseException("Non-digit character found while looking for a number");
+        throw Except::ParseException("Non-digit character found while looking for a number");
     }
 
     // Computing the value of the number.

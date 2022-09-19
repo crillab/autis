@@ -31,6 +31,7 @@
 #define OTIS_OTISXCSPCALLBACK_HPP
 
 #include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreCallbacks.h"
+#include "IOtisParseListener.hpp"
 
 namespace Otis {
 /**
@@ -39,7 +40,10 @@ namespace Otis {
 @file OtisXcspCallback.hpp
 */
 class OtisXcspCallback: public XCSP3Core::XCSP3CoreCallbacks {
-
+private:
+    IOtisParseListener* listener;
+public:
+    explicit OtisXcspCallback(IOtisParseListener *listener);
 };
 
 } // Otis

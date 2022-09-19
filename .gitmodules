@@ -4,3 +4,6 @@
 [submodule "libs/universe"]
 	path = libs/universe
 	url = https://gitlab.univ-artois.fr/cril-exakis-nelite-adp/softwares-tfa/cp/universe.git
+[submodule "libs/exception"]
+	path = libs/exception
+	url = https://gitlab.univ-artois.fr/cril-exakis-nelite-adp/softwares-tfa/cp/except.git

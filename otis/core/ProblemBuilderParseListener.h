@@ -75,10 +75,7 @@ namespace Otis {
          */
         bool allCoefficientsAre1;
 
-        /**
-         * The problem writer to use for the problem.
-         */
-        std::shared_ptr<Otis::ProblemWriter> problemWriter;
+
 
     public:
 
@@ -86,13 +83,6 @@ namespace Otis {
          * Creates a new ProblemBuilderParseListener.
          */
         explicit ProblemBuilderParseListener();
-
-        /**
-         * Sets the writer for the problem that will be parsed.
-         *
-         * @param writer The writer for the problem.
-         */
-        void setWriter(std::shared_ptr<Otis::ProblemWriter> writer) override;
 
         /**
          * Initializes the internal data structures of this listener to handle

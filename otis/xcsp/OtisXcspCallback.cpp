@@ -30,9 +30,6 @@
 #include "OtisXcspCallback.hpp"
 
 namespace Otis {
-/**
-@class OtisXcspCallback
-@brief 
-@file OtisXcspCallback.cpp
-*/
+    OtisXcspCallback::OtisXcspCallback(IOtisParseListener *listener) : listener(listener) {}
+
 } // Otis

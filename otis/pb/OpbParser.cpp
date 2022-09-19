@@ -1,6 +1,6 @@
 #include "OpbParser.h"
+#include "../../libs/exception/except/except.hpp"
 
-#include "../util/except.h"
 
 using namespace std;
 using namespace Otis;
@@ -35,7 +35,7 @@ void OpbParser::parse() {
 
     if (nbConstraintsRead != numberOfConstraints) {
         // The number of read constraints is not the expected one.
-        throw ParseException("Unexpected number of constraints");
+        throw Except::ParseException("Unexpected number of constraints");
     }
 
     listener.endParse();
@@ -45,7 +45,7 @@ void OpbParser::readMetaData()  {
     // Checking that the first line is a comment.
     char c = scanner.read();
     if (c != '*') {
-        throw ParseException("Metadata line expected");
+        throw Except::ParseException("Metadata line expected");
     }
 
     // Reading the metadata of the input.
@@ -87,7 +87,7 @@ void OpbParser::readObjective() {
 
             if ((c != '-') && (c != '+') && (!isdigit(c))) {
                 // A number should have been here.
-                throw ParseException("Number expected");
+                throw Except::ParseException("Number expected");
             }
 
             // Reading the next term of the objective function.
@@ -108,7 +108,7 @@ void OpbParser::readObjective() {
 
     } else {
         // The "min" keyword was expected but is not present.
-        throw ParseException("Keyword `min:' expected");
+        throw Except::ParseException("Keyword `min:' expected");
     }
 }
 
@@ -123,7 +123,7 @@ void OpbParser::readConstraint() {
 
         if ((c != '-') && (c != '+') && (!isdigit(c))) {
             // A number should have been here.
-            throw ParseException("Number expected");
+            throw Except::ParseException("Number expected");
         }
 
         // Reading the next term of the constraint.
@@ -153,7 +153,7 @@ void OpbParser::readConstraint() {
     // Looking for the semi-colon.
     char c;
     if ((!scanner.look(c)) || (c != ';')) {
-        throw ParseException("Semi-colon expected at end of constraint");
+        throw Except::ParseException("Semi-colon expected at end of constraint");
     }
 
     // Ending the constraint.
@@ -168,7 +168,7 @@ void OpbParser::readTerm(long long &coefficient, vector<int> &literals) {
     while (readIdentifier(literals));
 
     if (literals.empty()) {
-        throw ParseException("Literal identifier expected");
+        throw Except::ParseException("Literal identifier expected");
     }
 }
 
@@ -189,7 +189,7 @@ bool OpbParser::readIdentifier(vector<int> &literals) {
 
         // Reading the 'x' symbol.
         if ((scanner.look(c)) || (c != 'x')) {
-            throw ParseException("Symbol `x' expected");
+            throw Except::ParseException("Symbol `x' expected");
         }
     }
 
@@ -225,6 +225,6 @@ void OpbParser::readRelationalOperator(string &relationalOperator) {
         relationalOperator = "<=";
 
     } else {
-        throw ParseException("Unrecognized relational operator");
+        throw Except::ParseException("Unrecognized relational operator");
     }
 }
