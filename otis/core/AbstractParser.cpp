@@ -5,7 +5,7 @@
 #include "../problems/constraints/literals.h"
 
 using namespace std;
-using namespace rescuer;
+using namespace Otis;
 
 AbstractParser::AbstractParser(Scanner &scanner, ParseListener &listener) :
         scanner(scanner),

@@ -1,5 +1,25 @@
-#ifndef RESCUER_PROBLEMBUILDERPARSELISTENER_H
-#define RESCUER_PROBLEMBUILDERPARSELISTENER_H
+/******************************************************************************
+ * OTIS - Opening wriTing and readIng instanceS                               *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
+ * All rights reserved.                                                       *
+ *                                                                            *
+ * This library is free software; you can redistribute it andor               *
+ * modify it under the terms of the GNU Lesser General Public                 *
+ * License as published by the Free Software Foundation; either               *
+ * version 3 of the License, or (at your option) any later version.           *
+ *                                                                            *
+ * This library is distributed in the hope that it will be useful,            *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * See the GNU Lesser General Public License for more details.                *
+ *                                                                            *
+ * You should have received a copy of the GNU Lesser General Public           *
+ * License along with this library.                                           *
+ * If not, see {@link http:www.gnu.orglicenses}.                              *
+ ******************************************************************************/
+
+#ifndef OTIS_PROBLEMBUILDERPARSELISTENER_H
+#define OTIS_PROBLEMBUILDERPARSELISTENER_H
 
 #include <memory>
 #include <string>
@@ -7,10 +27,8 @@
 
 #include "ParseListener.h"
 
-#include "../problems/Problem.h"
-#include "../problems/constraints/Constraint.h"
 
-namespace rescuer {
+namespace Otis {
 
     /**
      * The ProblemBuilderParseListener is a listener that allows to build a CNF or a
@@ -18,7 +36,7 @@ namespace rescuer {
      *
      * @version 0.1.0
      */
-    class ProblemBuilderParseListener : public rescuer::ParseListener {
+    class ProblemBuilderParseListener : public Otis::ParseListener {
 
     private:
 
@@ -30,7 +48,7 @@ namespace rescuer {
         /**
          * The constraints of the read problem.
          */
-        std::vector<std::shared_ptr<rescuer::Constraint>> constraints;
+        std::vector<std::shared_ptr<Otis::Constraint>> constraints;
 
         /**
          * The literals of the current constraint.
@@ -60,7 +78,7 @@ namespace rescuer {
         /**
          * The problem writer to use for the problem.
          */
-        std::shared_ptr<rescuer::ProblemWriter> problemWriter;
+        std::shared_ptr<Otis::ProblemWriter> problemWriter;
 
     public:
 
@@ -74,7 +92,7 @@ namespace rescuer {
          *
          * @param writer The writer for the problem.
          */
-        void setWriter(std::shared_ptr<rescuer::ProblemWriter> writer) override;
+        void setWriter(std::shared_ptr<Otis::ProblemWriter> writer) override;
 
         /**
          * Initializes the internal data structures of this listener to handle
@@ -124,7 +142,7 @@ namespace rescuer {
          *
          * @return The read problem.
          */
-        [[nodiscard]] std::shared_ptr<rescuer::Problem> buildProblem();
+        [[nodiscard]] std::shared_ptr<Otis::Problem> buildProblem();
 
     };
 

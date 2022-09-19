@@ -3,7 +3,7 @@
 #include "../util/except.h"
 
 using namespace std;
-using namespace rescuer;
+using namespace Otis;
 
 void ParseListener::startParse() {
     // Nothing to do by default.

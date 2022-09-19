@@ -3,7 +3,7 @@
 #include "../util/except.h"
 
 using namespace std;
-using namespace rescuer;
+using namespace Otis;
 
 OpbParser::OpbParser(Scanner &scanner, ParseListener &listener) :
         AbstractParser(scanner, listener) {

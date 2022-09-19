@@ -6,7 +6,7 @@
 #include "../util/except.h"
 
 using namespace std;
-using namespace rescuer;
+using namespace Otis;
 
 Scanner::Scanner(istream &input) :
         input(input) {

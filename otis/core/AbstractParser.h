@@ -1,5 +1,5 @@
-#ifndef RESCUER_ABSTRACTPARSER_H
-#define RESCUER_ABSTRACTPARSER_H
+#ifndef OTIS_ABSTRACTPARSER_H
+#define OTIS_ABSTRACTPARSER_H
 
 #include <istream>
 #include <memory>
@@ -7,7 +7,7 @@
 #include "ParseListener.h"
 #include "Scanner.h"
 
-namespace rescuer {
+namespace Otis {
 
     /**
      * The AbstractParser is the parent class of classes used to parse
@@ -22,12 +22,12 @@ namespace rescuer {
         /**
          * The scanner used to read the input stream.
          */
-        rescuer::Scanner &scanner;
+        Otis::Scanner &scanner;
 
         /**
          * The listener to notify while parsing.
          */
-        rescuer::ParseListener &listener;
+        Otis::ParseListener &listener;
 
         /**
          * The number of variables in the problem that is being read.
@@ -46,8 +46,8 @@ namespace rescuer {
          * @param scanner The scanner used to read the input stream.
          * @param listener The listener to notify.
          */
-        explicit AbstractParser(rescuer::Scanner &scanner,
-                                rescuer::ParseListener &listener);
+        explicit AbstractParser(Otis::Scanner &scanner,
+                                Otis::ParseListener &listener);
 
         /**
          * Checks whether the given literal is correct w.r.t. the expected

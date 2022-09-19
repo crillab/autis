@@ -3,7 +3,7 @@
 #include "../problems/constraints/RelationalOperator.h"
 
 using namespace std;
-using namespace rescuer;
+using namespace Otis;
 
 ProblemBuilderParseListener::ProblemBuilderParseListener() :
         numberOfVariables(),

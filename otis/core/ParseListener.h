@@ -1,12 +1,31 @@
-#ifndef RESCUER_PARSELISTENER_H
-#define RESCUER_PARSELISTENER_H
+/******************************************************************************
+ * OTIS - Opening wriTing and readIng instanceS                               *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
+ * All rights reserved.                                                       *
+ *                                                                            *
+ * This library is free software; you can redistribute it andor               *
+ * modify it under the terms of the GNU Lesser General Public                 *
+ * License as published by the Free Software Foundation; either               *
+ * version 3 of the License, or (at your option) any later version.           *
+ *                                                                            *
+ * This library is distributed in the hope that it will be useful,            *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * See the GNU Lesser General Public License for more details.                *
+ *                                                                            *
+ * You should have received a copy of the GNU Lesser General Public           *
+ * License along with this library.                                           *
+ * If not, see {@link http:www.gnu.orglicenses}.                              *
+ ******************************************************************************/
+
+#ifndef OTIS_PARSELISTENER_H
+#define OTIS_PARSELISTENER_H
 
 #include <string>
 #include <vector>
 
-#include "../problems/writers/ProblemWriter.h"
 
-namespace rescuer {
+namespace Otis {
 
     /**
      * The ParseListener is the listener interface to implement to get
@@ -17,13 +36,6 @@ namespace rescuer {
     class ParseListener {
 
     public:
-
-        /**
-         * Sets the writer for the problem that will be parsed.
-         *
-         * @param writer The writer for the problem.
-         */
-        virtual void setWriter(std::shared_ptr<rescuer::ProblemWriter> writer);
 
         /**
          * Notifies this listener that parsing is going to start.

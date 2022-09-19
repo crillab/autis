@@ -1,13 +1,33 @@
-#ifndef RESCUER_OPBPARSER_H
-#define RESCUER_OPBPARSER_H
+/******************************************************************************
+ * OTIS - Opening wriTing and readIng instanceS                               *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
+ * All rights reserved.                                                       *
+ *                                                                            *
+ * This library is free software; you can redistribute it andor               *
+ * modify it under the terms of the GNU Lesser General Public                 *
+ * License as published by the Free Software Foundation; either               *
+ * version 3 of the License, or (at your option) any later version.           *
+ *                                                                            *
+ * This library is distributed in the hope that it will be useful,            *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * See the GNU Lesser General Public License for more details.                *
+ *                                                                            *
+ * You should have received a copy of the GNU Lesser General Public           *
+ * License along with this library.                                           *
+ * If not, see {@link http:www.gnu.orglicenses}.                              *
+ ******************************************************************************/
+
+#ifndef OTIS_OPBPARSER_H
+#define OTIS_OPBPARSER_H
 
 #include <fstream>
 #include <string>
 #include <vector>
 
-#include "AbstractParser.h"
+#include "../core/AbstractParser.h"
 
-namespace rescuer {
+namespace Otis {
 
     /**
      * The OpbParser specializes AbstractParser to read inputs written
@@ -15,7 +35,7 @@ namespace rescuer {
      *
      * @version 0.1.0
      */
-    class OpbParser : public rescuer::AbstractParser {
+    class OpbParser : public Otis::AbstractParser {
 
     public:
 
@@ -26,7 +46,7 @@ namespace rescuer {
          * @param scanner The scanner used to read the input stream.
          * @param listener The listener to notify.
          */
-        OpbParser(rescuer::Scanner &scanner, rescuer::ParseListener &listener);
+        OpbParser(Otis::Scanner &scanner, Otis::ParseListener &listener);
 
         /**
          * Parses the input to read the problem to solve.

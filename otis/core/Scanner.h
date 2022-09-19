@@ -1,9 +1,9 @@
-#ifndef RESCUER_SCANNER_H
-#define RESCUER_SCANNER_H
+#ifndef OTIS_SCANNER_H
+#define OTIS_SCANNER_H
 
 #include <istream>
 
-namespace rescuer {
+namespace Otis {
 
     /**
      * The Scanner class allows to read data of various types from an input stream.
