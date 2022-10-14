@@ -5,8 +5,8 @@
 using namespace std;
 using namespace Otis;
 
-CnfParser::CnfParser(Scanner &scanner, ParseListener &listener) :
-        AbstractParser(scanner, listener) {
+CnfParser::CnfParser(Scanner &scanner, Universe::IUniverseSatSolver *solver) :
+        AbstractParser(scanner, solver) {
     // Nothing to do: all fields are already initialized.
 }
 
@@ -14,7 +14,7 @@ void CnfParser::parse() {
     bool inClause = false;
     int nbClausesRead = 0;
 
-    listener.startParse();
+    std::vector<int> clause;
 
     for (char next; scanner.look(next);) {
         if (next == 'c') {
@@ -25,7 +25,6 @@ void CnfParser::parse() {
             // This is the problem description line.
             scanner.read(numberOfVariables);
             scanner.read(numberOfConstraints);
-            listener.metaData(numberOfVariables, numberOfConstraints);
             scanner.skipLine();
 
         } else {
@@ -35,36 +34,36 @@ void CnfParser::parse() {
 
             if (!inClause) {
                 // This is a new clause to read.
-                listener.beginConstraint();
+                clause.clear();
                 inClause = true;
                 nbClausesRead++;
             }
 
             if (literal == 0) {
                 // This is the end of a clause.
-                listener.constraintRelationalOperator(">=");
-                listener.constraintDegree(1);
-                listener.endConstraint();
+                getConcreteSolver()->addClause(clause);
                 inClause = false;
 
             } else {
                 // The literal is added if and only if it is correct.
-                listener.constraintTerm(1LL, checkLiteral(literal));
+                clause.push_back(checkLiteral(literal));
             }
         }
     }
 
     if (inClause) {
         // The last clause has not been added.
-        listener.constraintRelationalOperator(">=");
-        listener.constraintDegree(1);
-        listener.endConstraint();
+        getConcreteSolver()->addClause(clause);
     }
 
     if (nbClausesRead != numberOfConstraints) {
         // The number of read clauses is not the expected one.
         throw Except::ParseException("Unexpected number of clauses");
     }
-
-    listener.endParse();
 }
+
+Universe::IUniverseSatSolver *CnfParser::getConcreteSolver() {
+    return (Universe::IUniverseSatSolver *)AbstractParser::getConcreteSolver();
+}
+
+
