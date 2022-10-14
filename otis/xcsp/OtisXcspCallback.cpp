@@ -30,6 +30,14 @@
 #include "OtisXcspCallback.hpp"
 
 namespace Otis {
-    OtisXcspCallback::OtisXcspCallback(IOtisParseListener *listener) : listener(listener) {}
+    OtisXcspCallback::OtisXcspCallback(Universe::IUniverseCspSolver* solver) : solver(solver) {}
+
+    void OtisXcspCallback::buildVariableInteger(string id, int minValue, int maxValue) {
+
+    }
+
+    void OtisXcspCallback::buildVariableInteger(string id, vector<int> &values) {
+
+    }
 
 } // Otis
