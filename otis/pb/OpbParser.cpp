@@ -5,13 +5,12 @@
 using namespace std;
 using namespace Otis;
 
-OpbParser::OpbParser(Scanner &scanner, ParseListener &listener) :
-        AbstractParser(scanner, listener) {
+OpbParser::OpbParser(Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver) :
+        AbstractParser(scanner, solver) {
     // Nothing to do: all fields are already initialized.
 }
 
 void OpbParser::parse() {
-    listener.startParse();
 
     // Reading the header of the file.
     readMetaData();
@@ -38,7 +37,6 @@ void OpbParser::parse() {
         throw Except::ParseException("Unexpected number of constraints");
     }
 
-    listener.endParse();
 }
 
 void OpbParser::readMetaData()  {
@@ -55,8 +53,6 @@ void OpbParser::readMetaData()  {
     // Ignoring the rest of the line.
     scanner.skipLine();
 
-    // Notifying the listener.
-    listener.metaData(numberOfVariables, numberOfConstraints);
 }
 
 void OpbParser::skipComments() {
@@ -75,37 +71,7 @@ void OpbParser::readObjective() {
 
     // Reading the objective function.
     if ((scanner.read() == 'm') && (scanner.read() == 'i') && (scanner.read() == 'n') && (scanner.read() == ':')) {
-        listener.beginObjective();
-
-        while (scanner.look(c)) {
-            if (c == ';') {
-                // This is the end of the objective function.
-                // We need to consume the ';' character.
-                (void) scanner.read();
-                break;
-            }
-
-            if ((c != '-') && (c != '+') && (!isdigit(c))) {
-                // A number should have been here.
-                throw Except::ParseException("Number expected");
-            }
-
-            // Reading the next term of the objective function.
-            long long coefficient;
-            vector<int> literals;
-            readTerm(coefficient, literals);
-            if (literals.size() == 1) {
-                // This is a simple term.
-                listener.objectiveTerm(coefficient, literals[0]);
-
-            } else {
-                // This is a product of literals.
-                listener.objectiveProduct(coefficient, literals);
-            }
-        }
-
-        listener.endObjective();
-
+        throw Except::UnsupportedOperationException("Objective function not supported.");
     } else {
         // The "min" keyword was expected but is not present.
         throw Except::ParseException("Keyword `min:' expected");
@@ -113,8 +79,9 @@ void OpbParser::readObjective() {
 }
 
 void OpbParser::readConstraint() {
-    listener.beginConstraint();
 
+    std::vector<int> literals;
+    std::vector<Universe::BigInteger> coefficients;
     for (char c; scanner.look(c);) {
         if ((c == '>') || (c == '=')) {
             // This is the relational operator.
@@ -127,28 +94,26 @@ void OpbParser::readConstraint() {
         }
 
         // Reading the next term of the constraint.
-        vector<int> literals;
-        long long coefficient;
-        readTerm(coefficient, literals);
-        if (literals.size() == 1) {
+        vector<int> term;
+        Universe::BigInteger coefficient;
+        readTerm(coefficient, term);
+        if (term.size() == 1) {
             // This is a simple term.
-            listener.constraintTerm(coefficient, literals[0]);
-
+            literals.push_back(term[0]);
+            coefficients.push_back(coefficient);
         } else {
-            // This is a product of literals.
-            listener.constraintProduct(coefficient, literals);
+            // This is a product of term.
+            throw Except::UnsupportedOperationException("Non linear constraints are not supported.");
         }
     }
 
     // Reading the relational operator.
     string s;
     readRelationalOperator(s);
-    listener.constraintRelationalOperator(s);
 
     // Reading the degree.
-    long long degree;
+    Universe::BigInteger degree;
     scanner.read(degree);
-    listener.constraintDegree(degree);
 
     // Looking for the semi-colon.
     char c;
@@ -159,10 +124,16 @@ void OpbParser::readConstraint() {
     // Ending the constraint.
     // We need to consume the ';' character.
     (void) scanner.read();
-    listener.endConstraint();
+    if(s=="="){
+        getConcreteSolver()->addExactly(literals,coefficients,degree);
+    }else if(s==">=" ){
+        getConcreteSolver()->addAtLeast(literals,coefficients,degree);
+    }else{
+        getConcreteSolver()->addAtMost(literals,coefficients,degree);
+    }
 }
 
-void OpbParser::readTerm(long long &coefficient, vector<int> &literals) {
+void OpbParser::readTerm(Universe::BigInteger &coefficient, vector<int> &literals) {
     scanner.read(coefficient);
 
     while (readIdentifier(literals));
@@ -228,3 +199,8 @@ void OpbParser::readRelationalOperator(string &relationalOperator) {
         throw Except::ParseException("Unrecognized relational operator");
     }
 }
+
+Universe::IUniversePseudoBooleanSolver *OpbParser::getConcreteSolver() {
+    return (Universe::IUniversePseudoBooleanSolver *)AbstractParser::getConcreteSolver();
+}
+

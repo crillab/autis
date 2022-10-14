@@ -2,6 +2,7 @@
 #define OTIS_SCANNER_H
 
 #include <istream>
+#include "../../libs/universe/universe/include/core/UniverseType.hpp"
 
 namespace Otis {
 
@@ -76,6 +77,8 @@ namespace Otis {
          * @return If EOF has been reached.
          */
         bool eof();
+
+        std::istream &getInput() const;
 
     };
 

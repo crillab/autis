@@ -31,7 +31,7 @@
 #define OTIS_OTISXCSPCALLBACK_HPP
 
 #include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreCallbacks.h"
-#include "IOtisParseListener.hpp"
+#include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
 namespace Otis {
 /**
@@ -41,9 +41,13 @@ namespace Otis {
 */
 class OtisXcspCallback: public XCSP3Core::XCSP3CoreCallbacks {
 private:
-    IOtisParseListener* listener;
+    Universe::IUniverseCspSolver* solver;
 public:
-    explicit OtisXcspCallback(IOtisParseListener *listener);
+    explicit OtisXcspCallback(Universe::IUniverseCspSolver* solver);
+
+    void buildVariableInteger(string id, int minValue, int maxValue) override;
+
+    void buildVariableInteger(string id, vector<int> &values) override;
 };
 
 } // Otis

@@ -12,6 +12,7 @@
 #define OTIS_OTISXCSPPARSERADAPTER_HPP
 
 #include "../core/AbstractParser.h"
+#include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
 namespace Otis {
 
@@ -21,9 +22,12 @@ namespace Otis {
 */
     class OtisXCSPParserAdapter: public AbstractParser {
     public:
-        OtisXCSPParserAdapter(Scanner &scanner, ParseListener &listener);
+        OtisXCSPParserAdapter(Scanner &scanner, Universe::IUniverseCspSolver* listener);
 
         void parse() override;
+
+    protected:
+        Universe::IUniverseCspSolver*getConcreteSolver() override;
     };
 
 } // Otis

@@ -22,7 +22,7 @@
 #define OTIS_CNFPARSER_H
 
 #include "../core/AbstractParser.h"
-
+#include "../../libs/universe/universe/include/sat/IUniverseSatSolver.hpp"
 namespace Otis {
 
     /**
@@ -42,12 +42,18 @@ namespace Otis {
          * @param scanner The scanner used to read the input stream.
          * @param listener The listener to notify.
          */
-        explicit CnfParser(Otis::Scanner &scanner, Otis::ParseListener &listener);
+        explicit CnfParser(Otis::Scanner &scanner, Universe::IUniverseSatSolver *listener);
 
         /**
          * Parses the input to read the problem to solve.
          */
         void parse() override;
+
+
+        virtual ~CnfParser()=default;
+
+    protected:
+        Universe::IUniverseSatSolver *getConcreteSolver() override;
 
     };
 

@@ -4,8 +4,8 @@
 #include <istream>
 #include <memory>
 
-#include "ParseListener.h"
 #include "Scanner.h"
+#include "../../libs/universe/universe/include/core/IUniverseSolver.hpp"
 
 namespace Otis {
 
@@ -27,7 +27,7 @@ namespace Otis {
         /**
          * The listener to notify while parsing.
          */
-        Otis::ParseListener &listener;
+        Universe::IUniverseSolver* solver;
 
         /**
          * The number of variables in the problem that is being read.
@@ -44,10 +44,10 @@ namespace Otis {
          * the given listener.
          *
          * @param scanner The scanner used to read the input stream.
-         * @param listener The listener to notify.
+         * @param solver The solver to notify.
          */
         explicit AbstractParser(Otis::Scanner &scanner,
-                                Otis::ParseListener &listener);
+                                Universe::IUniverseSolver* solver);
 
         /**
          * Checks whether the given literal is correct w.r.t. the expected
@@ -59,12 +59,18 @@ namespace Otis {
          */
         [[nodiscard]] int checkLiteral(int literal) const;
 
+
+        virtual Universe::IUniverseSolver* getConcreteSolver();
+
+
     public:
 
         /**
          * Parses the input to read the problem to solve.
          */
         virtual void parse() = 0;
+
+        virtual ~AbstractParser()=default;
 
     };
 

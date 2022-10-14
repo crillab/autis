@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "../core/AbstractParser.h"
+#include "../../libs/universe/universe/include/pb/IUniversePseudoBooleanSolver.hpp"
 
 namespace Otis {
 
@@ -46,12 +47,16 @@ namespace Otis {
          * @param scanner The scanner used to read the input stream.
          * @param listener The listener to notify.
          */
-        OpbParser(Otis::Scanner &scanner, Otis::ParseListener &listener);
+        OpbParser(Otis::Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver);
 
         /**
          * Parses the input to read the problem to solve.
          */
         void parse() override;
+
+        virtual ~OpbParser()=default;
+    protected:
+        Universe::IUniversePseudoBooleanSolver *getConcreteSolver() override;
 
     private:
 
@@ -84,7 +89,7 @@ namespace Otis {
          * @param literals The literals of the term (if there is more than one,
          *        this is a product of literals).
          */
-        void readTerm(long long &coefficient, std::vector<int> &literals);
+        void readTerm(Universe::BigInteger &coefficient, std::vector<int> &literals);
 
         /**
          * Reads an identifier from the stream and appends it to literals.

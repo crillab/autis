@@ -136,6 +136,12 @@ file(GLOB_RECURSE HEADERS
 
 set(LIBRARY_NAME otis)
 
+# Adding other library
+
+find_package(LibXml2 REQUIRED)
+include_directories(${LIBXML2_INCLUDE_DIR})
+include_directories(libs/xcsp3-cpp-parser/include)
+
 
 # Adding the library to the build targets.
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})

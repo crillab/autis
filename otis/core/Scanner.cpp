@@ -39,7 +39,7 @@ void Scanner::read(int &value) {
     value = (int) longValue;
 }
 
-void Scanner::read(long long &value) {
+void Scanner::read(Universe::BigInteger &value) {
     char c;
     int sign = 1;
 
@@ -82,4 +82,8 @@ void Scanner::skipLine() {
 
 bool Scanner::eof() {
     return input.eof();
+}
+
+istream &Scanner::getInput() const {
+    return input;
 }

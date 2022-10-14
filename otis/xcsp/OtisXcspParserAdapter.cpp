@@ -9,12 +9,20 @@
 
 
 #include "OtisXcspParserAdapter.hpp"
+#include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreParser.h"
+#include "OtisXcspCallback.hpp"
 
 namespace Otis {
-    OtisXCSPParserAdapter::OtisXCSPParserAdapter(Scanner &scanner, ParseListener &listener) : AbstractParser(scanner,
-                                                                                                             listener) {}
+    OtisXCSPParserAdapter::OtisXCSPParserAdapter(Scanner &scanner, Universe::IUniverseCspSolver* solver) : AbstractParser(scanner,
+                                                                                                             solver) {}
     void OtisXCSPParserAdapter::parse() {
+        OtisXcspCallback cb(getConcreteSolver());
+        XCSP3Core::XCSP3CoreParser parser(&cb);
+        parser.parse(scanner.getInput());
+    }
 
+    Universe::IUniverseCspSolver* OtisXCSPParserAdapter::getConcreteSolver() {
+        return (Universe::IUniverseCspSolver*)AbstractParser::getConcreteSolver();
     }
 
 
