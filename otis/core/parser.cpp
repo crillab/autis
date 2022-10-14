@@ -27,15 +27,16 @@
 #include "../xcsp/OtisXcspParserAdapter.hpp"
 #include "../../libs/exception/except/except.hpp"
 
+
 using namespace std;
 using namespace Otis;
 
-void Otis::parse(const string &path, ParseListener &listener) {
+void Otis::parse(const string &path, Universe::ISolverFactory &listener) {
     ifstream input(path);
     parse(input, listener);
 }
 
-void Otis::parse(istream &input, ParseListener &listener) {
+void Otis::parse(istream &input, Universe::ISolverFactory &factory) {
     char c;
     Scanner scanner(input);
     unique_ptr<AbstractParser> parser;
@@ -46,13 +47,13 @@ void Otis::parse(istream &input, ParseListener &listener) {
     }
     if ((c == 'c') || (c == 'p')) {
         // The input uses the CNF format.
-        parser = make_unique<CnfParser>(scanner, listener);
+        parser = make_unique<CnfParser>(scanner, factory.createSatSolver());
 
     } else if (c == '*') {
         // The input uses the OPB format.
-        parser = make_unique<OpbParser>(scanner, listener);
+        parser = make_unique<OpbParser>(scanner, factory.createPseudoBooleanSolver());
     }else if(c=='<'){
-            parser = make_unique<OtisXCSPParserAdapter>(scanner, listener);
+            parser = make_unique<OtisXCSPParserAdapter>(scanner, factory.createCspSolver());
     } else {
         // The format is not recognized.
         throw Except::ParseException("Could not determine input type");

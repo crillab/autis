@@ -3,8 +3,7 @@
 
 #include <string>
 
-#include "ParseListener.h"
-
+#include "../../libs/universe/universe/include/utils/ISolverFactory.hpp"
 namespace Otis {
 
     /**
@@ -14,16 +13,16 @@ namespace Otis {
      * @param path The path of the file to parse.
      * @param listener The listener to notify while parsing.
      */
-    void parse(const std::string &path, Otis::ParseListener &listener);
+    void parse(const std::string &path, Universe::ISolverFactory &listener);
 
     /**
      * Parses the given input stream to read the formula to solve.
      * The format of the input may be CNF or OPB.
      *
      * @param input The input stream to parse.
-     * @param listener The listener to notify while parsing.
+     * @param factory The listener to notify while parsing.
      */
-    void parse(std::istream &input, Otis::ParseListener &listener);
+    void parse(std::istream &input, Universe::ISolverFactory &factory);
 
 }
 
