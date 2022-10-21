@@ -83,6 +83,8 @@ public:
 
     void buildConstraintIntension(string id, XCSP3Core::Tree *tree) override;
 
+    void buildConstraintAlldifferent(string id, vector<XCSP3Core::XVariable *> &list) override;
+
 
 };
 

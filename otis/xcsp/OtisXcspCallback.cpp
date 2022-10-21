@@ -110,6 +110,10 @@ namespace Otis {
         XCSP3CoreCallbacks::buildConstraintSum(id, trees, coefs, cond);
     }
 
+    void OtisXcspCallback::buildConstraintAlldifferent(string id, vector<XVariable *> &list) {
+        solver->addAllDifferent(toString(list));
+    }
+
     std::vector<Universe::BigInteger> OtisXcspCallback::toBigIntegerVector(std::vector<int>& vec) const{
         std::vector<Universe::BigInteger> lists;
         for(auto i:vec){
