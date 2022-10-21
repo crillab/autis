@@ -42,12 +42,48 @@ namespace Otis {
 class OtisXcspCallback: public XCSP3Core::XCSP3CoreCallbacks {
 private:
     Universe::IUniverseCspSolver* solver;
+    std::vector<Universe::BigInteger> toBigIntegerVector(std::vector<int>& vec) const;
+    std::vector<string> toString(std::vector<XCSP3Core::XVariable *> &list) const;
+    std::vector<std::vector<Universe::BigInteger>> toVectorOfVectorBigInteger(std::vector<std::vector<int>>& vec) const;
 public:
     explicit OtisXcspCallback(Universe::IUniverseCspSolver* solver);
 
     void buildVariableInteger(string id, int minValue, int maxValue) override;
 
     void buildVariableInteger(string id, vector<int> &values) override;
+
+    void beginVariableArray(string id) override;
+
+    void endVariableArray() override;
+
+    void
+    buildObjectiveMaximize(XCSP3Core::ExpressionObjective type, vector<XCSP3Core::XVariable *> &list, vector<int> &coefs) override;
+
+    void buildConstraintExtension(string id, vector<XCSP3Core::XVariable *> list, vector<vector<int>> &tuples, bool support,
+                                  bool hasStar) override;
+
+    void buildConstraintExtension(string id, XCSP3Core::XVariable *variable, vector<int> &tuples, bool support,
+                                  bool hasStar) override;
+
+    void buildConstraintExtensionAs(string id, vector<XCSP3Core::XVariable *> list, bool support, bool hasStar) override;
+
+    void
+    buildConstraintSum(string id, vector<XCSP3Core::XVariable *> &list, vector<int> &coeffs, XCSP3Core::XCondition &cond) override;
+
+    void buildConstraintSum(string id, vector<XCSP3Core::XVariable *> &list, XCSP3Core::XCondition &cond) override;
+
+    void buildConstraintSum(string id, vector<XCSP3Core::XVariable *> &list, vector<XCSP3Core::XVariable *> &coeffs,
+                            XCSP3Core::XCondition &cond) override;
+
+    void buildConstraintSum(string id, vector<XCSP3Core::Tree *> &trees, XCSP3Core::XCondition &cond) override;
+
+    void buildConstraintSum(string id, vector<XCSP3Core::Tree *> &trees, vector<int> &coefs, XCSP3Core::XCondition &cond) override;
+
+    void buildConstraintIntension(string id, string expr) override;
+
+    void buildConstraintIntension(string id, XCSP3Core::Tree *tree) override;
+
+
 };
 
 } // Otis
