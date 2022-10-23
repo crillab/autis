@@ -201,6 +201,6 @@ void OpbParser::readRelationalOperator(string &relationalOperator) {
 }
 
 Universe::IUniversePseudoBooleanSolver *OpbParser::getConcreteSolver() {
-    return (Universe::IUniversePseudoBooleanSolver *)AbstractParser::getConcreteSolver();
+    return dynamic_cast<Universe::IUniversePseudoBooleanSolver *>(AbstractParser::getConcreteSolver());
 }
 

@@ -22,7 +22,7 @@ namespace Otis {
     }
 
     Universe::IUniverseCspSolver* OtisXCSPParserAdapter::getConcreteSolver() {
-        return (Universe::IUniverseCspSolver*)AbstractParser::getConcreteSolver();
+        return dynamic_cast<Universe::IUniverseCspSolver*>(AbstractParser::getConcreteSolver());
     }
 
 
