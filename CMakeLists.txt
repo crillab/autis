@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Declaring the project.
-project(otis VERSION 0.1.0 )
+project(otis VERSION 0.1.2)
 set(PROJECT_VENDOR "Falque Thibault" "Romain Wallon")
 set(PROJECT_CONTACT "falque@cril.fr" "wallon@cril.fr")
 set(PROJECT_URL "http://github.com/crillab/otis")

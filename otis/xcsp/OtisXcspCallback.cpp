@@ -29,15 +29,114 @@
 
 #include "OtisXcspCallback.hpp"
 
+using namespace XCSP3Core;
+
 namespace Otis {
     OtisXcspCallback::OtisXcspCallback(Universe::IUniverseCspSolver* solver) : solver(solver) {}
 
     void OtisXcspCallback::buildVariableInteger(string id, int minValue, int maxValue) {
-
+        solver->newVariable(id,minValue,maxValue);
     }
 
     void OtisXcspCallback::buildVariableInteger(string id, vector<int> &values) {
-
+        solver->newVariable(id,values);
     }
+
+    void OtisXcspCallback::buildConstraintIntension(string id, string expr) {
+        XCSP3CoreCallbacks::buildConstraintIntension(id, expr);
+    }
+
+    void OtisXcspCallback::buildConstraintIntension(string id, XCSP3Core::Tree *tree) {
+        //TODO
+        XCSP3CoreCallbacks::buildConstraintIntension(id, tree);
+    }
+
+    void OtisXcspCallback::buildObjectiveMaximize(XCSP3Core::ExpressionObjective type, vector<XVariable *> &list,
+                                                  vector<int> &coefs) {
+        vector<string> vars = toString(list);
+
+        solver->maximizeSum(vars,this->toBigIntegerVector(coefs));
+    }
+
+
+    void OtisXcspCallback::buildConstraintExtension(string id, vector<XVariable *> list, vector<vector<int>> &tuples,
+                                                    bool support, bool hasStar) {
+        if(hasStar){
+            throw runtime_error("Unsupported exception: hasStar");
+        }
+        if(support) {
+            solver->addSupport(toString(list), toVectorOfVectorBigInteger(tuples));
+        }else{
+            solver->addConflicts(toString(list), toVectorOfVectorBigInteger(tuples));
+        }
+    }
+
+    void OtisXcspCallback::buildConstraintExtension(string id, XCSP3Core::XVariable *variable, vector<int> &tuples,
+                                                    bool support, bool hasStar) {
+        if(hasStar){
+            throw runtime_error("Unsupported exception: hasStar");
+        }
+        if(support) {
+            solver->addSupport(variable->id, toBigIntegerVector(tuples));
+        }else{
+            solver->addConflicts(variable->id, toBigIntegerVector(tuples));
+        }
+    }
+
+    void OtisXcspCallback::buildConstraintExtensionAs(string id, vector<XVariable *> list, bool support, bool hasStar) {
+        XCSP3CoreCallbacks::buildConstraintExtensionAs(id, list, support, hasStar);
+    }
+
+    void OtisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, vector<int> &coeffs,
+                                              XCSP3Core::XCondition &cond) {
+        XCSP3CoreCallbacks::buildConstraintSum(id, list, coeffs, cond);
+    }
+
+    void OtisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, XCSP3Core::XCondition &cond) {
+        XCSP3CoreCallbacks::buildConstraintSum(id, list, cond);
+    }
+
+    void OtisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, vector<XVariable *> &coeffs,
+                                              XCSP3Core::XCondition &cond) {
+        XCSP3CoreCallbacks::buildConstraintSum(id, list, coeffs, cond);
+    }
+
+    void OtisXcspCallback::buildConstraintSum(string id, vector<Tree *> &trees, XCSP3Core::XCondition &cond) {
+        XCSP3CoreCallbacks::buildConstraintSum(id, trees, cond);
+    }
+
+    void OtisXcspCallback::buildConstraintSum(string id, vector<Tree *> &trees, vector<int> &coefs,
+                                              XCSP3Core::XCondition &cond) {
+        XCSP3CoreCallbacks::buildConstraintSum(id, trees, coefs, cond);
+    }
+
+    void OtisXcspCallback::buildConstraintAlldifferent(string id, vector<XVariable *> &list) {
+        solver->addAllDifferent(toString(list));
+    }
+
+    std::vector<Universe::BigInteger> OtisXcspCallback::toBigIntegerVector(std::vector<int>& vec) const{
+        std::vector<Universe::BigInteger> lists;
+        for(auto i:vec){
+            lists.push_back(i);
+        }
+        return lists;
+    }
+
+    std::vector<std::vector<Universe::BigInteger>> OtisXcspCallback::toVectorOfVectorBigInteger(std::vector<std::vector<int>>& vec) const{
+        std::vector<std::vector<Universe::BigInteger>> lists;
+        for(auto i:vec){
+            lists.push_back(toBigIntegerVector(i));
+        }
+        return lists;
+    }
+
+    std::vector<string> OtisXcspCallback::toString(std::vector<XVariable *> &list) const {
+        vector<string> vars;
+        for(auto xv:list){
+            vars.push_back(xv->id);
+        }
+        return vars;
+    }
+
 
 } // Otis

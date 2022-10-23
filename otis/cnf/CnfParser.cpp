@@ -63,7 +63,7 @@ void CnfParser::parse() {
 }
 
 Universe::IUniverseSatSolver *CnfParser::getConcreteSolver() {
-    return (Universe::IUniverseSatSolver *)AbstractParser::getConcreteSolver();
+    return dynamic_cast<Universe::IUniverseSatSolver *>(AbstractParser::getConcreteSolver());
 }
 
 
