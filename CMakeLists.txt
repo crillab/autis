@@ -142,11 +142,15 @@ find_package(LibXml2 REQUIRED)
 include_directories(${LIBXML2_INCLUDE_DIR})
 include_directories(libs/xcsp3-cpp-parser/include)
 
+# Configuring the use of JNI.
+find_package(JNI REQUIRED)
+include_directories(${JNI_INCLUDE_DIRS})
 
 # Adding the library to the build targets.
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 link_libraries(${LIBRARY_NAME} xcsp3parser universe except)
+target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES})
 
 if (WIN32)
     install(TARGETS ${LIBRARY_NAME}
