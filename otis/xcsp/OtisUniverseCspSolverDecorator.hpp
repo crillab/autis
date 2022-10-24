@@ -26,6 +26,32 @@ namespace Otis {
         ~OtisUniverseCspSolverDecorator() override =default ;
 
         void parse();
+
+        Universe::UniverseSolverResult solve() override;
+
+        Universe::UniverseSolverResult solve(std::string filename) override;
+        Universe::UniverseSolverResult solve(std::vector<Universe::UniverseAssumption<Universe::BigInteger>> assumpts) override;
+
+        void interrupt() override;
+
+        void setVerbosity(int level) override;
+
+        void setTimeout(long seconds) override;
+
+        void setTimeoutMs(long mseconds) override;
+
+        void reset() override;
+
+        int nVariables() override;
+
+        int nConstraints() override;
+
+        void setLogFile(const std::string &filename) override;
+
+        std::vector<Universe::BigInteger> solution() override;
+
+
+
     private:
         Universe::IUniverseSolver* solver;
         FILE* in;
