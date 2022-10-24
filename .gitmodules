@@ -4,7 +4,7 @@
 	branch = develop
 [submodule "libs/exception"]
 	path = libs/exception
-	url = https://gitlab.univ-artois.fr/cril-exakis-nelite-adp/softwares-tfa/cp/except.git
+	url = https://gitlab.univ-artois.fr/cril-exakis-nelite-adp/softwares-tfa/cp/tootatis/except
 [submodule "libs/xcsp3-cpp-parser"]
 	path = libs/xcsp3-cpp-parser
 	url = https://github.com/thibaultfalque/XCSP3-CPP-Parser
