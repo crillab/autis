@@ -146,7 +146,7 @@ include_directories(libs/xcsp3-cpp-parser/include)
 # Adding the library to the build targets.
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-link_libraries(${LIBRARY_NAME} xcsp3parser universe except)
+target_link_libraries(${LIBRARY_NAME} xcsp3parser universe except)
 
 if (WIN32)
     install(TARGETS ${LIBRARY_NAME}
