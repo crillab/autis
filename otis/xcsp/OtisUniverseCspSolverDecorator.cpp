@@ -18,9 +18,57 @@ namespace Otis {
             : solver(solver), in(in) {}
 
     void OtisUniverseCspSolverDecorator::parse() {
-        OtisXcspCallback cb(solver);
+        OtisXcspCallback cb(dynamic_cast<Universe::IUniverseCspSolver*>(solver));
         XCSP3Core::XCSP3CoreParser parser(&cb);
         parser.parse(in);
+    }
+
+    Universe::UniverseSolverResult OtisUniverseCspSolverDecorator::solve() {
+        return Universe::UniverseSolverResult::OPTIMUM_FOUND;
+    }
+
+    Universe::UniverseSolverResult OtisUniverseCspSolverDecorator::solve(std::string filename) {
+        return Universe::UniverseSolverResult::OPTIMUM_FOUND;
+    }
+
+    void OtisUniverseCspSolverDecorator::interrupt() {
+
+    }
+
+    void OtisUniverseCspSolverDecorator::setVerbosity(int level) {
+
+    }
+
+    void OtisUniverseCspSolverDecorator::setTimeout(long seconds) {
+
+    }
+
+    void OtisUniverseCspSolverDecorator::setTimeoutMs(long mseconds) {
+
+    }
+
+    void OtisUniverseCspSolverDecorator::reset() {
+
+    }
+
+    int OtisUniverseCspSolverDecorator::nVariables() {
+        return 0;
+    }
+
+    int OtisUniverseCspSolverDecorator::nConstraints() {
+        return 0;
+    }
+
+    void OtisUniverseCspSolverDecorator::setLogFile(const string &filename) {
+
+    }
+
+    vector<Universe::BigInteger> OtisUniverseCspSolverDecorator::OtisUniverseCspSolverDecorator::solution() {
+        return {};
+    }
+
+    Universe::UniverseSolverResult OtisUniverseCspSolverDecorator::solve(std::vector<Universe::UniverseAssumption<Universe::BigInteger>> assumpts){
+        return Universe::UniverseSolverResult::UNKNOWN;
     }
 
 
