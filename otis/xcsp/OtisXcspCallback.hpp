@@ -85,6 +85,9 @@ public:
 
     void buildConstraintAlldifferent(string id, vector<XCSP3Core::XVariable *> &list) override;
 
+private:
+
+    Universe::IUniverseIntensionConstraint *createIntension(XCSP3Core::Node *node);
 
 };
 
