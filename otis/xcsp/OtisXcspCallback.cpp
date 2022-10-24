@@ -138,5 +138,13 @@ namespace Otis {
         return vars;
     }
 
+    void OtisXcspCallback::beginVariableArray(string id) {
+        //XCSP3CoreCallbacks::beginVariableArray(id);
+    }
+
+    void OtisXcspCallback::endVariableArray() {
+        //XCSP3CoreCallbacks::endVariableArray();
+    }
+
 
 } // Otis

@@ -19,15 +19,15 @@ namespace Otis {
 * @class OtisUniverseCspSolverDecorator
 * @brief 
 */
-    class OtisUniverseCspSolverDecorator {
+    class OtisUniverseCspSolverDecorator:public Universe::IUniverseSolver {
     public:
-        OtisUniverseCspSolverDecorator(Universe::IUniverseCspSolver *solver, FILE *in);
+        OtisUniverseCspSolverDecorator(Universe::IUniverseSolver *solver, FILE *in);
 
-        virtual ~OtisUniverseCspSolverDecorator()=default;
+        ~OtisUniverseCspSolverDecorator() override =default ;
 
         void parse();
     private:
-        Universe::IUniverseCspSolver* solver;
+        Universe::IUniverseSolver* solver;
         FILE* in;
     };
 

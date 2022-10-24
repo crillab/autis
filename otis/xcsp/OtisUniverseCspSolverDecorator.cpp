@@ -14,7 +14,7 @@
 
 namespace Otis {
 
-    OtisUniverseCspSolverDecorator::OtisUniverseCspSolverDecorator(Universe::IUniverseCspSolver *solver, FILE *in)
+    OtisUniverseCspSolverDecorator::OtisUniverseCspSolverDecorator(Universe::IUniverseSolver *solver, FILE *in)
             : solver(solver), in(in) {}
 
     void OtisUniverseCspSolverDecorator::parse() {
