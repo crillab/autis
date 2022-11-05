@@ -1,5 +1,5 @@
 /******************************************************************************
- * OTIS - Opening wriTing and readIng instanceS                               *
+ * AUTIS - Opening wriTing and readIng instanceS                               *
  * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
@@ -18,45 +18,59 @@
  * If not, see {@link http:www.gnu.orglicenses}.                              *
  ******************************************************************************/
 
-#include <memory>
 
-#include "../cnf/CnfParser.h"
-#include "../pb/OpbParser.h"
-#include "Scanner.h"
-#include "parser.h"
-#include "../xcsp/OtisXcspParserAdapter.hpp"
-#include "../../libs/exception/except/except.hpp"
+/**
+* @file CnfParser.h
+* @brief This file represents the header of the class CNFParser for parsing Dimacs CNF File.
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 24/10/2022
+* @copyright Copyright (c) 2022 GNU LGPL 3
+*/
 
 
-using namespace std;
-using namespace Otis;
 
-void Otis::parse(const string &path, Universe::ISolverFactory &listener) {
-    ifstream input(path);
-    parse(input, listener);
+#ifndef AUTIS_CNFPARSER_H
+#define AUTIS_CNFPARSER_H
+
+#include "../core/AbstractParser.h"
+#include "../../libs/universe/universe/include/sat/IUniverseSatSolver.hpp"
+namespace Autis {
+
+    /**
+     * @class CNFParser
+     * @brief The CnfParser specializes AbstractParser to read inputs written
+     * using the CNF format.
+     *
+     * @version 0.1.0
+     */
+    class CnfParser : public Autis::AbstractParser {
+
+    public:
+
+        /**
+         * Creates a new CnfParser which uses the given scanner and notifies
+         * the given listener.
+         *
+         * @param scanner The scanner used to read the input stream.
+         * @param listener The listener to notify.
+         */
+        explicit CnfParser(Autis::Scanner &scanner, Universe::IUniverseSatSolver *listener);
+
+        /**
+         * Parses the input to read the problem to solve.
+         */
+        void parse() override;
+
+
+        virtual ~CnfParser()=default;
+
+    protected:
+        Universe::IUniverseSatSolver *getConcreteSolver() override;
+
+    };
+
 }
 
-void Otis::parse(istream &input, Universe::ISolverFactory &factory) {
-    char c;
-    Scanner scanner(input);
-    unique_ptr<AbstractParser> parser;
-
-    if (!scanner.look(c)) {
-        // The input stream is empty.
-        throw Except::ParseException("Input is empty");
-    }
-    if ((c == 'c') || (c == 'p')) {
-        // The input uses the CNF format.
-        parser = make_unique<CnfParser>(scanner, factory.createSatSolver());
-
-    } else if (c == '*') {
-        // The input uses the OPB format.
-        parser = make_unique<OpbParser>(scanner, factory.createPseudoBooleanSolver());
-    }else if(c=='<'){
-            parser = make_unique<OtisXCSPParserAdapter>(scanner, factory.createCspSolver());
-    } else {
-        // The format is not recognized.
-        throw Except::ParseException("Could not determine input type");
-    }
-    parser->parse();
-}
+#endif

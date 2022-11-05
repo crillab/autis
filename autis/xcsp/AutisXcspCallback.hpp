@@ -1,12 +1,12 @@
 /******************************************************************************
- * OTIS - Opening wriTing and readIng instanceS                               *
- * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
+ * AUTIS, a library for parsing combinatorial problems.                       *
+ * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
  * All rights reserved.                                                       *
  *                                                                            *
  * This library is free software; you can redistribute it andor               *
  * modify it under the terms of the GNU Lesser General Public                 *
  * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.           *
+ * version 3 of the License, or (at your option) any later version.         *
  *                                                                            *
  * This library is distributed in the hope that it will be useful,            *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
@@ -15,38 +15,39 @@
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see {@link http:www.gnu.orglicenses}.                              *
+ * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
+
 
 /**
 * @author Thibault Falque
 * @author Romain Wallon 
 * @date  18/09/2022
-* @file OtisXcspCallback.hpp
+* @file AutisXcspCallback.hpp
 * @brief 
 * @license This project is released under the GNU LGPL3 License.
 */
 
-#ifndef OTIS_OTISXCSPCALLBACK_HPP
-#define OTIS_OTISXCSPCALLBACK_HPP
+#ifndef AUTIS_AUTISXCSPCALLBACK_HPP
+#define AUTIS_AUTISXCSPCALLBACK_HPP
 
 #include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreCallbacks.h"
 #include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
-namespace Otis {
+namespace Autis {
 /**
-@class OtisXcspCallback
-@brief Header for the class OtisXcspCallback. 
-@file OtisXcspCallback.hpp
+@class AutisXcspCallback
+@brief Header for the class AutisXcspCallback.
+@file AutisXcspCallback.hpp
 */
-class OtisXcspCallback: public XCSP3Core::XCSP3CoreCallbacks {
+class AutisXcspCallback: public XCSP3Core::XCSP3CoreCallbacks {
 private:
     Universe::IUniverseCspSolver* solver;
     std::vector<Universe::BigInteger> toBigIntegerVector(std::vector<int>& vec) const;
     std::vector<string> toString(std::vector<XCSP3Core::XVariable *> &list) const;
     std::vector<std::vector<Universe::BigInteger>> toVectorOfVectorBigInteger(std::vector<std::vector<int>>& vec) const;
 public:
-    explicit OtisXcspCallback(Universe::IUniverseCspSolver* solver);
+    explicit AutisXcspCallback(Universe::IUniverseCspSolver* solver);
 
     void buildVariableInteger(string id, int minValue, int maxValue) override;
 
@@ -91,6 +92,6 @@ private:
 
 };
 
-} // Otis
+} // Autis
 
-#endif //OTIS_OTISXCSPCALLBACK_HPP
+#endif //AUTIS_AUTISXCSPCALLBACK_HPP

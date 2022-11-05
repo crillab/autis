@@ -1,12 +1,12 @@
 /******************************************************************************
- * OTIS - Opening wriTing and readIng instanceS                               *
- * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
+ * AUTIS, a library for parsing combinatorial problems.                       *
+ * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
  * All rights reserved.                                                       *
  *                                                                            *
  * This library is free software; you can redistribute it andor               *
  * modify it under the terms of the GNU Lesser General Public                 *
  * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.           *
+ * version 3 of the License, or (at your option) any later version.         *
  *                                                                            *
  * This library is distributed in the hope that it will be useful,            *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
@@ -15,11 +15,12 @@
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see {@link http:www.gnu.orglicenses}.                              *
+ * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
-#ifndef OTIS_OPBPARSER_H
-#define OTIS_OPBPARSER_H
+
+#ifndef AUTIS_OPBPARSER_H
+#define AUTIS_OPBPARSER_H
 
 #include <fstream>
 #include <string>
@@ -28,7 +29,7 @@
 #include "../core/AbstractParser.h"
 #include "../../libs/universe/universe/include/pb/IUniversePseudoBooleanSolver.hpp"
 
-namespace Otis {
+namespace Autis {
 
     /**
      * The OpbParser specializes AbstractParser to read inputs written
@@ -36,7 +37,7 @@ namespace Otis {
      *
      * @version 0.1.0
      */
-    class OpbParser : public Otis::AbstractParser {
+    class OpbParser : public Autis::AbstractParser {
 
     public:
 
@@ -47,7 +48,7 @@ namespace Otis {
          * @param scanner The scanner used to read the input stream.
          * @param listener The listener to notify.
          */
-        OpbParser(Otis::Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver);
+        OpbParser(Autis::Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver);
 
         /**
          * Parses the input to read the problem to solve.

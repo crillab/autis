@@ -1,12 +1,12 @@
 /******************************************************************************
- * OTIS - Opening wriTing and readIng instanceS                               *
- * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
+ * AUTIS, a library for parsing combinatorial problems.                       *
+ * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
  * All rights reserved.                                                       *
  *                                                                            *
  * This library is free software; you can redistribute it andor               *
  * modify it under the terms of the GNU Lesser General Public                 *
  * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.           *
+ * version 3 of the License, or (at your option) any later version.         *
  *                                                                            *
  * This library is distributed in the hope that it will be useful,            *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
@@ -15,52 +15,53 @@
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see {@link http:www.gnu.orglicenses}.                              *
+ * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
+
 
 /**
 * @author Thibault Falque
 * @author Romain Wallon 
 * @date  18/09/2022
-* @file OtisXcspCallback.cpp
+* @file AutisXcspCallback.cpp
 * @brief 
 * @license This project is released under the GNU LGPL3 License.
 */
 
-#include "OtisXcspCallback.hpp"
+#include "AutisXcspCallback.hpp"
 #include "../../../libs/universe/universe/include/csp/intension/UniverseJavaIntensionConstraintFactory.hpp"
 
 using namespace XCSP3Core;
 
-namespace Otis {
-    OtisXcspCallback::OtisXcspCallback(Universe::IUniverseCspSolver* solver) : solver(solver) {}
+namespace Autis {
+    AutisXcspCallback::AutisXcspCallback(Universe::IUniverseCspSolver* solver) : solver(solver) {}
 
-    void OtisXcspCallback::buildVariableInteger(string id, int minValue, int maxValue) {
+    void AutisXcspCallback::buildVariableInteger(string id, int minValue, int maxValue) {
         solver->newVariable(id,minValue,maxValue);
     }
 
-    void OtisXcspCallback::buildVariableInteger(string id, vector<int> &values) {
+    void AutisXcspCallback::buildVariableInteger(string id, vector<int> &values) {
         solver->newVariable(id,values);
     }
 
-    void OtisXcspCallback::buildConstraintIntension(string id, string expr) {
+    void AutisXcspCallback::buildConstraintIntension(string id, string expr) {
         XCSP3CoreCallbacks::buildConstraintIntension(id, expr);
     }
 
-    void OtisXcspCallback::buildConstraintIntension(string id, XCSP3Core::Tree *tree) {
+    void AutisXcspCallback::buildConstraintIntension(string id, XCSP3Core::Tree *tree) {
         solver->addIntension(createIntension(tree->root));
     }
 
-    void OtisXcspCallback::buildObjectiveMaximize(XCSP3Core::ExpressionObjective type, vector<XVariable *> &list,
-                                                  vector<int> &coefs) {
+    void AutisXcspCallback::buildObjectiveMaximize(XCSP3Core::ExpressionObjective type, vector<XVariable *> &list,
+                                                   vector<int> &coefs) {
         vector<string> vars = toString(list);
 
         solver->maximizeSum(vars,this->toBigIntegerVector(coefs));
     }
 
 
-    void OtisXcspCallback::buildConstraintExtension(string id, vector<XVariable *> list, vector<vector<int>> &tuples,
-                                                    bool support, bool hasStar) {
+    void AutisXcspCallback::buildConstraintExtension(string id, vector<XVariable *> list, vector<vector<int>> &tuples,
+                                                     bool support, bool hasStar) {
         if(hasStar){
             throw runtime_error("Unsupported exception: hasStar");
         }
@@ -71,8 +72,8 @@ namespace Otis {
         }
     }
 
-    void OtisXcspCallback::buildConstraintExtension(string id, XCSP3Core::XVariable *variable, vector<int> &tuples,
-                                                    bool support, bool hasStar) {
+    void AutisXcspCallback::buildConstraintExtension(string id, XCSP3Core::XVariable *variable, vector<int> &tuples,
+                                                     bool support, bool hasStar) {
         if(hasStar){
             throw runtime_error("Unsupported exception: hasStar");
         }
@@ -83,38 +84,38 @@ namespace Otis {
         }
     }
 
-    void OtisXcspCallback::buildConstraintExtensionAs(string id, vector<XVariable *> list, bool support, bool hasStar) {
+    void AutisXcspCallback::buildConstraintExtensionAs(string id, vector<XVariable *> list, bool support, bool hasStar) {
         XCSP3CoreCallbacks::buildConstraintExtensionAs(id, list, support, hasStar);
     }
 
-    void OtisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, vector<int> &coeffs,
-                                              XCSP3Core::XCondition &cond) {
+    void AutisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, vector<int> &coeffs,
+                                               XCSP3Core::XCondition &cond) {
         XCSP3CoreCallbacks::buildConstraintSum(id, list, coeffs, cond);
     }
 
-    void OtisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, XCSP3Core::XCondition &cond) {
+    void AutisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, XCSP3Core::XCondition &cond) {
         XCSP3CoreCallbacks::buildConstraintSum(id, list, cond);
     }
 
-    void OtisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, vector<XVariable *> &coeffs,
-                                              XCSP3Core::XCondition &cond) {
+    void AutisXcspCallback::buildConstraintSum(string id, vector<XVariable *> &list, vector<XVariable *> &coeffs,
+                                               XCSP3Core::XCondition &cond) {
         XCSP3CoreCallbacks::buildConstraintSum(id, list, coeffs, cond);
     }
 
-    void OtisXcspCallback::buildConstraintSum(string id, vector<Tree *> &trees, XCSP3Core::XCondition &cond) {
+    void AutisXcspCallback::buildConstraintSum(string id, vector<Tree *> &trees, XCSP3Core::XCondition &cond) {
         XCSP3CoreCallbacks::buildConstraintSum(id, trees, cond);
     }
 
-    void OtisXcspCallback::buildConstraintSum(string id, vector<Tree *> &trees, vector<int> &coefs,
-                                              XCSP3Core::XCondition &cond) {
+    void AutisXcspCallback::buildConstraintSum(string id, vector<Tree *> &trees, vector<int> &coefs,
+                                               XCSP3Core::XCondition &cond) {
         XCSP3CoreCallbacks::buildConstraintSum(id, trees, coefs, cond);
     }
 
-    void OtisXcspCallback::buildConstraintAlldifferent(string id, vector<XVariable *> &list) {
+    void AutisXcspCallback::buildConstraintAlldifferent(string id, vector<XVariable *> &list) {
         solver->addAllDifferent(toString(list));
     }
 
-    std::vector<Universe::BigInteger> OtisXcspCallback::toBigIntegerVector(std::vector<int>& vec) const{
+    std::vector<Universe::BigInteger> AutisXcspCallback::toBigIntegerVector(std::vector<int>& vec) const{
         std::vector<Universe::BigInteger> lists;
         for(auto i:vec){
             lists.push_back(i);
@@ -122,7 +123,7 @@ namespace Otis {
         return lists;
     }
 
-    std::vector<std::vector<Universe::BigInteger>> OtisXcspCallback::toVectorOfVectorBigInteger(std::vector<std::vector<int>>& vec) const{
+    std::vector<std::vector<Universe::BigInteger>> AutisXcspCallback::toVectorOfVectorBigInteger(std::vector<std::vector<int>>& vec) const{
         std::vector<std::vector<Universe::BigInteger>> lists;
         for(auto i:vec){
             lists.push_back(toBigIntegerVector(i));
@@ -130,7 +131,7 @@ namespace Otis {
         return lists;
     }
 
-    std::vector<string> OtisXcspCallback::toString(std::vector<XVariable *> &list) const {
+    std::vector<string> AutisXcspCallback::toString(std::vector<XVariable *> &list) const {
         vector<string> vars;
         for(auto xv:list){
             vars.push_back(xv->id);
@@ -138,15 +139,15 @@ namespace Otis {
         return vars;
     }
 
-    void OtisXcspCallback::beginVariableArray(string id) {
+    void AutisXcspCallback::beginVariableArray(string id) {
         //XCSP3CoreCallbacks::beginVariableArray(id);
     }
 
-    void OtisXcspCallback::endVariableArray() {
+    void AutisXcspCallback::endVariableArray() {
         //XCSP3CoreCallbacks::endVariableArray();
     }
 
-    Universe::IUniverseIntensionConstraint *OtisXcspCallback::createIntension(Node *node) {
+    Universe::IUniverseIntensionConstraint *AutisXcspCallback::createIntension(Node *node) {
         if (node->type == ExpressionType::ODECIMAL) {
             return Universe::UniverseJavaIntensionConstraintFactory::constant((long) ((NodeConstant *) node)->val);
         }
@@ -169,12 +170,12 @@ namespace Otis {
             }
             case ExpressionType::ODIST: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::dist(child1, child2);
             }
             case ExpressionType::ODIV: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::div(child1, child2);
             }
             case ExpressionType::OMAX: {
@@ -193,7 +194,7 @@ namespace Otis {
             }
             case ExpressionType::OMOD: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::mod(child1, child2);
             }
             case ExpressionType::OMUL: {
@@ -209,7 +210,7 @@ namespace Otis {
             }
             case ExpressionType::OPOW: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::pow(child1, child2);
             }
             case ExpressionType::OSQR: {
@@ -218,7 +219,7 @@ namespace Otis {
             }
             case ExpressionType::OSUB: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::sub(child1, child2);
             }
             case ExpressionType::OIFF: {
@@ -237,7 +238,7 @@ namespace Otis {
             }
             case ExpressionType::OIMP: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::impl(child1, child2);
             }
             case ExpressionType::ONOT: {
@@ -267,32 +268,32 @@ namespace Otis {
             }
             case ExpressionType::OGE: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::ge(child1, child2);
             }
             case ExpressionType::OGT: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::gt(child1, child2);
             }
             case ExpressionType::OLE: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::le(child1, child2);
             }
             case ExpressionType::OLT: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::lt(child1, child2);
             }
             case ExpressionType::ONE: {
                 auto child1 = createIntension(node->parameters[0]);
-                auto child2 = createIntension(node->parameters[0]);
+                auto child2 = createIntension(node->parameters[1]);
                 return Universe::UniverseJavaIntensionConstraintFactory::neq(child1, child2);
             }
             default:
-                throw std::runtime_error("No opertator");
+                throw std::runtime_error("No operator");
         }
     }
 
-} // Otis
+} // Autis

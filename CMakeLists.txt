@@ -1,18 +1,18 @@
 # Configuring CMake.
-cmake_minimum_required(VERSION 3.22)
-set(CMAKE_CXX_STANDARD 20)
+cmake_minimum_required(VERSION 3.23.2)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Declaring the project.
-project(otis VERSION 0.1.2)
-set(PROJECT_VENDOR "Falque Thibault" "Romain Wallon")
+project(autis VERSION 0.1.0)
+set(PROJECT_VENDOR "Falque Thibault" "Wallon Romain")
 set(PROJECT_CONTACT "falque@cril.fr" "wallon@cril.fr")
-set(PROJECT_URL "http://github.com/crillab/otis")
-set(PROJECT_DESCRIPTION "otis: Opening wriTing and readIng instanceS")
+set(PROJECT_URL "http://github.com/crillab/autis")
+set(PROJECT_DESCRIPTION "autis: Opening wriTing and readIng instanceS")
 
+set(LIBRARY_NAME autis)
 
 # configure GCC/MSVC/Clang  command
-
 if (NOT MSVC)
     message(STATUS "Not msvc")
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -25,7 +25,6 @@ if (NOT MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wredundant-decls")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Winit-self")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
-        #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wnoexcept")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPARANOID ")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-function")
@@ -105,19 +104,19 @@ message(STATUS "CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
 # Update and configure submodule dependencies
 
 find_package(Git QUIET)
-#if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-#    # Update submodules as needed
-#    option(GIT_SUBMODULE "Check submodules during build" ON)
-#    if(GIT_SUBMODULE)
-#        message(STATUS "Submodule update")
-#        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-#                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-#                RESULT_VARIABLE GIT_SUBMOD_RESULT)
-#        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-#            message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-#        endif()
-#    endif()
-#endif()
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    # Update submodules as needed
+    option(GIT_SUBMODULE "Check submodules during build" ON)
+    if(GIT_SUBMODULE)
+        message(STATUS "Submodule update")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif()
+    endif()
+endif()
 
 add_subdirectory(libs)
 
@@ -127,14 +126,12 @@ add_subdirectory(doc)
 
 
 file(GLOB_RECURSE SOURCES
-        ${PROJECT_SOURCE_DIR}/otis/**.cpp)
+        ${PROJECT_SOURCE_DIR}/autis/**.cpp)
 
 
 file(GLOB_RECURSE HEADERS
-        ${PROJECT_SOURCE_DIR}/otis/**.hpp
+        ${PROJECT_SOURCE_DIR}/autis/**.hpp
         )
-
-set(LIBRARY_NAME otis)
 
 # Adding other library
 
@@ -146,10 +143,16 @@ include_directories(libs/xcsp3-cpp-parser/include)
 find_package(JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
+
 # Adding the library to the build targets.
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} xcsp3parser universe exception)
+target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} xcsp3parser universe exception libeasyjni)
+
+# Adding a target for a sample program
+add_executable(main apps/main.cpp)
+target_link_libraries(main ${LIBRARY_NAME})
+
 
 if (WIN32)
     install(TARGETS ${LIBRARY_NAME}
