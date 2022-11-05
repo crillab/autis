@@ -1,17 +1,20 @@
 # AUTIS - A library for parsing combinatorial problems
 
-//TODO pipeline 
+License|Linux & macOS Build|Windows Build|SonarCloud
+:--:|:--:|:--:|:--:
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)|[![Build Status](https://github.com/crillab/autis/actions/workflows/autis_ci.yml/badge.svg)](https://github.com/crillab/autis/actions/workflows/autis_ci.yml)|||
 
 ## Description 
 
-AUTIS library allows parsing combinatorial problem instances for different common formats. 
+`AUTIS` library allows parsing combinatorial problem instances for different common formats. 
 Currently, the following are supported:
 
 - [Dimacs CNF](https://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html)
 - [OPB](http://www.cril.univ-artois.fr/PB16/format.pdf) 
 - [XCSP3](https://xcsp.org) based on the [XCSP3-CPP-PARSER](https://github.com/xcsp3team/XCSP3-CPP-Parser)
 
-AUTIS can feed any solver implementing [the Universe interface](https://github.com/crillab/universe).
+`AUTIS` can feed any solver implementing [the Universe interface](https://github.com/crillab/universe).
 
 
 
@@ -19,7 +22,7 @@ AUTIS can feed any solver implementing [the Universe interface](https://github.c
 
 The latest release is available [here]()
 
-AUTIS is developed using [C++ 17](https://en.cppreference.com/w/cpp/17), 
+`AUTIS` is developed using [C++ 17](https://en.cppreference.com/w/cpp/17), 
 [CMake 3.23](https://cmake.org/). 
 Installing CMake is required if you want to build from source.
 To do so, after having installed all the needed tools, you will need to clone
