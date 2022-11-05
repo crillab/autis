@@ -33,7 +33,7 @@ namespace Autis {
      * @param path The path of the file to parse.
      * @param listener The listener to notify while parsing.
      */
-    void parse(const std::string &path, Universe::ISolverFactory &listener);
+    Universe::IUniverseSolver * parse(const std::string &path, Universe::ISolverFactory &listener);
 
     /**
      * Parses the given input stream to read the formula to solve.
@@ -42,7 +42,7 @@ namespace Autis {
      * @param input The input stream to parse.
      * @param factory The listener to notify while parsing.
      */
-    void parse(std::istream &input, Universe::ISolverFactory &factory);
+    Universe::IUniverseSolver * parse(std::istream &input, Universe::ISolverFactory &factory);
 
 }
 

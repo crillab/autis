@@ -47,3 +47,5 @@ cmake-build-debug
 build
 jar
 cmake-build-release
+cmake-*
+apps

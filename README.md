@@ -13,6 +13,8 @@ Currently, the following are supported:
 
 AUTIS can feed any solver implementing [the Universe interface](https://github.com/crillab/universe).
 
+
+
 ## Build 
 
 The latest release is available [here]()
@@ -29,7 +31,30 @@ $ cd autis
 $ TODO
 ```
 
+## Using CMake
+
+This library is designed for simplified use in projects using CMake. To use this project, it is possible to 
+create a sub-module in your project with the following commands:
+
+```bash
+git submodule add https://github.com/crillab/autis libs/autis
+git submodule update --remote --recursive --init
+```
+
+And then add the following instructions in your CMakeLists.txt file:
+
+```cmake
+add_subdirectory(libs/autis)
+add_executable(your_solver solver.h solver.cpp)
+target_link_libraries(your_solver autis)
+```
+
 ## Examples 
+
+For each of these examples, we consider that you have your own implementation of the `ISolverFactory` interface 
+from the [Universe library](https://github.com/crillab/universe). 
+
+> The paths to the .h files must be adapted.
 
 ### Dimacs CNF
 
@@ -37,9 +62,33 @@ If you want to parse a CNF file like [this one](examples/example.cnf), you may u
 to the following example.
 
 ```c++
-#include "...."
+#include <string>
+#include <iostream>
+#include "../libs/universe/universe/include/utils/ISolverFactory.hpp"
+#include "../autis/core/parser.h"
+
 int main(){
-    
+    std::string path ="examples/example.cnf";
+    Universe::ISolverFactory* factory= new YourFactoryImplementation();
+    auto solver = Autis::parse(path,*factory);
+    auto result = solver->solve();
+    auto solution = solver->solution();
+    switch(result){
+        case Universe::UniverseSolverResult::SATISFIABLE:
+            auto solution = solver->solution();
+            std::cout<<"SATISFIABLE"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNSATISFIABLE:
+            std::cout<<"UNSATISFIABLE"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNKNOWN:
+            std::cout<<"UNKNOWN"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNSUPPORTED:
+            std::cout<<"UNSUPPORTED"<<std::endl;
+            break;
+    }
+    return 0;
 }
 ```
 
@@ -49,18 +98,75 @@ If you want to parse an OPB file like [this one](examples/example.opb), you may 
 to the following example.
 
 ```c++
-#include "...."
+#include <string>
+#include <iostream>
+#include "../libs/universe/universe/include/utils/ISolverFactory.hpp"
+#include "../autis/core/parser.h"
+
 int main(){
-    
+    std::string path ="examples/example.opb";
+    Universe::ISolverFactory* factory= new YourFactoryImplementation();
+    auto solver = Autis::parse(path,*factory);
+    auto result = solver->solve();
+    auto solution = solver->solution();
+    switch(result){
+        case Universe::UniverseSolverResult::SATISFIABLE:
+            auto solution = solver->solution();
+            std::cout<<"SATISFIABLE"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNSATISFIABLE:
+            std::cout<<"UNSATISFIABLE"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNKNOWN:
+            std::cout<<"UNKNOWN"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNSUPPORTED:
+            std::cout<<"UNSUPPORTED"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::OPTIMUM_FOUND:
+            auto solution = solver->solution();
+            std::cout<<"OPTIMUM_FOUND"<<std::endl;
+            break;
+    }
+    return 0;
 }
 ```
 
 ### XCSP
+
 If you want to parse an XCSP3 file like [this one](examples/example.xml), you may use something similar
 to the following example.
 ```c++
-#include "...."
+#include <string>
+#include <iostream>
+#include "../libs/universe/universe/include/utils/ISolverFactory.hpp"
+#include "../autis/core/parser.h"
+
 int main(){
-    
+    std::string path ="examples/example.xml";
+    Universe::ISolverFactory* factory= new YourFactoryImplementation();
+    auto solver = Autis::parse(path,*factory);
+    auto result = solver->solve();
+
+    switch(result){
+        case Universe::UniverseSolverResult::SATISFIABLE:
+            auto solution = solver->solution();
+            std::cout<<"SATISFIABLE"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNSATISFIABLE:
+            std::cout<<"UNSATISFIABLE"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNKNOWN:
+            std::cout<<"UNKNOWN"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::UNSUPPORTED:
+            std::cout<<"UNSUPPORTED"<<std::endl;
+            break;
+        case Universe::UniverseSolverResult::OPTIMUM_FOUND:
+            auto solution = solver->solution();
+            std::cout<<"OPTIMUM_FOUND"<<std::endl;
+            break;
+    }
+    return 0;
 }
 ```

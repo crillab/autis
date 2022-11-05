@@ -32,32 +32,36 @@
 using namespace std;
 using namespace Autis;
 
-void Autis::parse(const string &path, Universe::ISolverFactory &listener) {
+Universe::IUniverseSolver * Autis::parse(const string &path, Universe::ISolverFactory &listener) {
     ifstream input(path);
-    parse(input, listener);
+    return parse(input, listener);
 }
 
-void Autis::parse(istream &input, Universe::ISolverFactory &factory) {
+Universe::IUniverseSolver *Autis::parse(istream &input, Universe::ISolverFactory &factory) {
     char c;
     Scanner scanner(input);
     unique_ptr<AbstractParser> parser;
-
+    Universe::IUniverseSolver *solver;
     if (!scanner.look(c)) {
         // The input stream is empty.
         throw Except::ParseException("Input is empty");
     }
     if ((c == 'c') || (c == 'p')) {
+        solver = factory.createSatSolver();
         // The input uses the CNF format.
-        parser = make_unique<CnfParser>(scanner, factory.createSatSolver());
+        parser = make_unique<CnfParser>(scanner, dynamic_cast<Universe::IUniverseSatSolver *>(solver));
 
     } else if (c == '*') {
+        solver = factory.createPseudoBooleanSolver();
         // The input uses the OPB format.
-        parser = make_unique<OpbParser>(scanner, factory.createPseudoBooleanSolver());
-    }else if(c=='<'){
-            parser = make_unique<AutisXCSPParserAdapter>(scanner, factory.createCspSolver());
+        parser = make_unique<OpbParser>(scanner, dynamic_cast<Universe::IUniversePseudoBooleanSolver *>(solver));
+    } else if (c == '<') {
+        solver = factory.createCspSolver();
+        parser = make_unique<AutisXCSPParserAdapter>(scanner, dynamic_cast<Universe::IUniverseCspSolver *>(solver));
     } else {
         // The format is not recognized.
         throw Except::ParseException("Could not determine input type");
     }
     parser->parse();
+    return solver;
 }

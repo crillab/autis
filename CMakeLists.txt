@@ -45,9 +45,6 @@ if (NOT MSVC)
         set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -mtune=native -march=native -g3 ")
     endif ()
 
-    # disable warnings for the register keyword which is deprecated but used in the python 2.7 bindings
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-register")
-
 elseif (MSVC)
     string(REGEX REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     string(REGEX REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
@@ -130,7 +127,7 @@ file(GLOB_RECURSE SOURCES
 
 
 file(GLOB_RECURSE HEADERS
-        ${PROJECT_SOURCE_DIR}/autis/**.hpp
+        ${PROJECT_SOURCE_DIR}/autis/**.hpp ${PROJECT_SOURCE_DIR}/autis/**.h
         )
 
 # Adding other library
@@ -151,6 +148,9 @@ target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} xcsp3parser universe exce
 
 # Adding a target for a sample program
 add_executable(main apps/main.cpp)
+target_link_libraries(main ${LIBRARY_NAME})
+
+add_executable(main2 apps/main_cnf.cpp)
 target_link_libraries(main ${LIBRARY_NAME})
 
 
