@@ -26,9 +26,12 @@ To do so, after having installed all the needed tools, you will need to clone
 the project:
 
 ```bash
-$ git clone https://github.com/crillab/autis.git
-$ cd autis
-$ TODO
+git clone https://github.com/crillab/autis.git --recursive
+cd autis
+mkdir build
+cd build 
+cmake .. -DCMAKE_BUILD_TYPE=RELEASE
+cmake --build . 
 ```
 
 ## Using CMake
@@ -170,3 +173,9 @@ int main(){
     return 0;
 }
 ```
+
+## Dependencies 
+
+- [XCSP3-CPP-Parser](https://github.com/xcsp3team/XCSP3-CPP-PARSER)
+- [Universe](https://github.com/crillab/universe)
+- [Except](https://github.com/crillab/except)
