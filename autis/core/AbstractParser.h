@@ -18,6 +18,18 @@
  * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
+
+/**
+* @file AbstractParser.h
+* @brief This file represents the header of the abstract class AbstractParser.
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 24/10/2022
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
+*/
+
 #ifndef AUTIS_ABSTRACTPARSER_H
 #define AUTIS_ABSTRACTPARSER_H
 
@@ -30,8 +42,8 @@
 namespace Autis {
 
     /**
-     * @class
-     * The AbstractParser is the parent class of classes used to parse
+     * @class AbstractParser
+     * @brief The AbstractParser is the parent class of classes used to parse
      * input streams so as to read a problem to solve.
      *
      * @version 0.1.0
@@ -61,7 +73,8 @@ namespace Autis {
         int numberOfConstraints;
 
         /**
-         * Creates a new parser which uses the given scanner and notifies
+         * @fn AbstractParser(Autis::Scanner &scanner, Universe::IUniverseSolver* solver)
+         * @brief Creates a new parser which uses the given scanner and notifies
          * the given listener.
          *
          * @param scanner The scanner used to read the input stream.
@@ -71,7 +84,8 @@ namespace Autis {
                                 Universe::IUniverseSolver* solver);
 
         /**
-         * Checks whether the given literal is correct w.r.t. the expected
+         * @fn checkLiteral(int literal)
+         * @brief Checks whether the given literal is correct w.r.t. the expected
          * number of variables.
          *
          * @param literal The literal to check.
@@ -87,7 +101,8 @@ namespace Autis {
     public:
 
         /**
-         * Parses the input to read the problem to solve.
+         * @fn parse()
+         * @brief Parses the input to read the problem to solve.
          */
         virtual void parse() = 0;
 

@@ -26,7 +26,8 @@
 * @author Romain Wallon
 * @version 0.1.0
 * @date 24/10/2022
-* @copyright Copyright (c) 2022 GNU LGPL 3
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
 */
 
 
@@ -50,7 +51,8 @@ namespace Autis {
     public:
 
         /**
-         * Creates a new CnfParser which uses the given scanner and notifies
+         * @fn CnfParser(Autis::Scanner &scanner, Universe::IUniverseSatSolver *listener)
+         * @brief Creates a new CnfParser which uses the given scanner and notifies
          * the given listener.
          *
          * @param scanner The scanner used to read the input stream.
@@ -59,7 +61,8 @@ namespace Autis {
         explicit CnfParser(Autis::Scanner &scanner, Universe::IUniverseSatSolver *listener);
 
         /**
-         * Parses the input to read the problem to solve.
+         * @fn parse()
+         * @brief Parses the input to read the problem to solve.
          */
         void parse() override;
 

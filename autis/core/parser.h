@@ -18,6 +18,18 @@
  * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
+/**
+* @file parser.h
+* @brief This file represents the header for the parse function.
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 24/10/2022
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
+*/
+
+
 #ifndef AUTIS_PARSER_H
 #define AUTIS_PARSER_H
 
@@ -27,7 +39,8 @@
 namespace Autis {
 
     /**
-     * Parses the file at the given path to read the formula to solve.
+     * @fn parse(const std::string &path, Universe::ISolverFactory &listener)
+     * @brief Parses the file at the given path to read the formula to solve.
      * The format of the input file may be CNF or OPB.
      *
      * @param path The path of the file to parse.
@@ -36,7 +49,8 @@ namespace Autis {
     Universe::IUniverseSolver * parse(const std::string &path, Universe::ISolverFactory &listener);
 
     /**
-     * Parses the given input stream to read the formula to solve.
+     * @fn parse(std::istream &input, Universe::ISolverFactory &factory)
+     * @brief Parses the given input stream to read the formula to solve.
      * The format of the input may be CNF or OPB.
      *
      * @param input The input stream to parse.

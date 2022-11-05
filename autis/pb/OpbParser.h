@@ -18,6 +18,16 @@
  * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
+/**
+* @file OpbParser.h
+* @brief This file represents the header of the OpbParser class.
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 24/10/2022
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
+*/
 
 #ifndef AUTIS_OPBPARSER_H
 #define AUTIS_OPBPARSER_H
@@ -32,7 +42,8 @@
 namespace Autis {
 
     /**
-     * The OpbParser specializes AbstractParser to read inputs written
+     * @class OpbParser
+     * @brief The OpbParser specializes AbstractParser to read inputs written
      * using the OPB format.
      *
      * @version 0.1.0
@@ -42,7 +53,8 @@ namespace Autis {
     public:
 
         /**
-         * Creates a new OpbParser which uses the given scanner and notifies
+         * @fn OpbParser(Autis::Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver)
+         * @brief Creates a new OpbParser which uses the given scanner and notifies
          * the given listener.
          *
          * @param scanner The scanner used to read the input stream.
@@ -51,7 +63,8 @@ namespace Autis {
         OpbParser(Autis::Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver);
 
         /**
-         * Parses the input to read the problem to solve.
+         * @fn parse()
+         * @brief Parses the input to read the problem to solve.
          */
         void parse() override;
 

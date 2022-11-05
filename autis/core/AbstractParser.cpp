@@ -18,6 +18,17 @@
  * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
+/**
+* @file AbstractParser.cpp
+* @brief This file represents the definition of the abstract class AbstractParser.
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 24/10/2022
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
+*/
+
 #include "AbstractParser.h"
 #include "../../libs/exception/except/except.hpp"
 

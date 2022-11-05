@@ -20,12 +20,14 @@
 
 
 /**
-* @author Thibault Falque
-* @author Romain Wallon 
-* @date  18/09/2022
 * @file AutisXcspCallback.hpp
-* @brief 
-* @license This project is released under the GNU LGPL3 License.
+* @brief
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 19/09/2022
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
 */
 
 #ifndef AUTIS_AUTISXCSPCALLBACK_HPP

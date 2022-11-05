@@ -18,6 +18,18 @@
  * If not, see http//:www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
+
+/**
+* @file Scanner.h
+* @brief This file represents the header of the Scanner class.
+* @author Thibault Falque
+* @author Romain Wallon
+* @version 0.1.0
+* @date 24/10/2022
+* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
+* @license GNU LGPL 3
+*/
+
 #ifndef AUTIS_SCANNER_H
 #define AUTIS_SCANNER_H
 
@@ -27,7 +39,8 @@
 namespace Autis {
 
     /**
-     * The Scanner class allows to read data of various types from an input stream.
+     * @class Scanner
+     * @brief The Scanner class allows to read data of various types from an input stream.
      *
      * @version 0.1.0
      */
@@ -43,14 +56,16 @@ namespace Autis {
     public:
 
         /**
-         * Creates a new Scanner.
+         * @fn Scanner(std::istream &input)
+         * @brief Creates a new Scanner.
          *
          * @param input The input stream to read from.
          */
         explicit Scanner(std::istream &input);
 
         /**
-         * Looks at the next non-blank character in the input stream, but does
+         * @fn look(char &c)
+         * @brief Looks at the next non-blank character in the input stream, but does
          * not consume it.
          *
          * @param c The variable in which to store the read character.
@@ -63,14 +78,16 @@ namespace Autis {
         [[nodiscard]] bool look(char &c);
 
         /**
-         * Reads the next character from the input stream.
+         * @fn read()
+         * @brief Reads the next character from the input stream.
          *
          * @return The read value.
          */
         [[nodiscard]] char read();
 
         /**
-         * Reads the next int value from the input stream.
+         * @fn read(int& value)
+         * @brief Reads the next int value from the input stream.
          * Initial characters that do not form a part of an integer are ignored.
          *
          * @param value The variable in which to store the read value.
@@ -78,7 +95,8 @@ namespace Autis {
         void read(int &value);
 
         /**
-         * Reads the next long long value from the input stream.
+         * @fn read(long long& value)
+         * @brief Reads the next long long value from the input stream.
          * Initial characters that do not form a part of an integer are ignored.
          *
          * @param value The variable in which to store the read value.
@@ -86,19 +104,21 @@ namespace Autis {
         void read(long long &value);
 
         /**
-         * Skips the next line in the input stream.
+         * @fn skipLine()
+         * @brief Skips the next line in the input stream.
          * All characters are ignored until end-of-line is read.
          */
         void skipLine();
 
         /**
-         * Checks whether this scanner has reached end-of-file.
+         * @fn eof()
+         * @brief Checks whether this scanner has reached end-of-file.
          *
          * @return If EOF has been reached.
          */
         bool eof();
 
-        std::istream &getInput() const;
+        [[nodiscard]] std::istream &getInput() const;
 
     };
 
