@@ -1,4 +1,4 @@
-name: CMake Unix System
+name: CMake
 on:
   push:
     branches: [ 'main', 'releases/**','test-github' ]
@@ -6,15 +6,13 @@ on:
     branches: [ 'main','test-github' ]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-
 jobs:
   build:
     strategy:
         fail-fast: false
         matrix:
-          os: [ubuntu-20.04]
+          os: [ubuntu-20.04,windows-latest]
           jdk: [17]
           gmp: ["On","Off"]
     name: ${{ matrix.os }}-gmp_${{ matrix.gmp }}
@@ -36,16 +34,32 @@ jobs:
       - name: Install Dependencies on MacOS
         if: startsWith(matrix.os, 'macos')
         run: |
-          brew install gmp
-          brew install libxml2 tbb
-      - name: Configure CMake
-        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+          brew install gmp libxml2 tbb
+      - name: Install Dependencies on Windows
+        if: startsWith(matrix.os, 'windows')
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-libxml2 mingw-w64-x86_64-gmp mingw-w64-x86_64-toolchain git make development
+          pacboy: >-
+            toolchain:p
+            cmake:p
+            ninja:p
+      - name: Configure CMake windows
+        if: startsWith(matrix.os, 'windows')
+        run: msys2 -c "cmake -B D:/a/autis/autis/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCOMPILE_GMP=${{ matrix.gmp }}"
+      - name: Configure CMake Unix
+        if: startsWith(matrix.os, 'ubuntu')
         run: cmake -B ${{github.workspace}}/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCOMPILE_GMP=${{ matrix.gmp }} -DGMP_INCLUDE_DIR=/usr/local/opt/gmp/include -DGMP_LIBRARY_DIR=/usr/local/opt/gmp/lib/libgmpxx.dylib
-      - name: Build
-        # Build your program with the given configuration
+      - name: Build Unix
+        if: startsWith(matrix.os, 'ubuntu')
         run: cmake --build ${{github.workspace}}/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} --config ${{env.BUILD_TYPE}}
-      - name: Upload a Build Artifact
+      - name: Build Windows
+        if: startsWith(matrix.os, 'windows')
+        run: msys2 -c "cmake --build D:/a/autis/autis/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} --config ${{env.BUILD_TYPE}}"
+      - name: Upload a Build Artifact Unix
+        if: startsWith(matrix.os, 'ubuntu')
         uses: actions/upload-artifact@v3.1.1
         with:
           name: autis-${{ matrix.os }}-gmp_${{ matrix.gmp }}
@@ -53,6 +67,15 @@ jobs:
             ${{github.workspace}}/build-${{ matrix.os }}-gmp_${{ matrix.gmp }}/lib*.*
             ${{github.workspace}}/autis/include/*/*.hpp
             ${{github.workspace}}/autis/include/*/*/*.hpp
+      - name: Upload a Build Artifact Windows
+        if: startsWith(matrix.os, 'windows')
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: autis-${{ matrix.os }}-gmp_${{ matrix.gmp }}
+          path: |
+            D:/a/autis/autis/build-${{ matrix.os }}-gmp_${{ matrix.gmp }}/lib*.*
+            D:/a/autis/autis/autis/include/*/*.hpp
+            D:/a/autis/autis/autis/include/*/*/*.hpp
       - name: Create Release
         if: startsWith( github.ref, 'release' )
         uses: fnkr/github-action-ghr@v1.3
