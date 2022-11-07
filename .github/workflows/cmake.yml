@@ -48,7 +48,7 @@ jobs:
             ninja:p
       - name: Configure CMake windows
         if: startsWith(matrix.os, 'windows')
-        run: msys2 -c "cmake -B D:/a/autis/autis/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCOMPILE_GMP=${{ matrix.gmp }}"
+        run: msys2 -c "cmake -B D:/a/autis/autis/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCOMPILE_GMP=${{ matrix.gmp }} -DGIT_SUBMODULE=Off"
       - name: Configure CMake Unix
         if: startsWith(matrix.os, 'ubuntu')
         run: cmake -B ${{github.workspace}}/build-${{ matrix.os }}-gmp_${{ matrix.gmp }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCOMPILE_GMP=${{ matrix.gmp }} -DGMP_INCLUDE_DIR=/usr/local/opt/gmp/include -DGMP_LIBRARY_DIR=/usr/local/opt/gmp/lib/libgmpxx.dylib
