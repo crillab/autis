@@ -33,7 +33,7 @@
 #ifndef AUTIS_AUTISXCSPPARSERADAPTER_HPP
 #define AUTIS_AUTISXCSPPARSERADAPTER_HPP
 
-#include "../core/AbstractParser.h"
+#include "../core/AbstractParser.hpp"
 #include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
 namespace Autis {

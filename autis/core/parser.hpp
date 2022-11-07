@@ -30,8 +30,8 @@
 */
 
 
-#ifndef AUTIS_PARSER_H
-#define AUTIS_PARSER_H
+#ifndef AUTIS_PARSER_HPP
+#define AUTIS_PARSER_HPP
 
 #include <string>
 

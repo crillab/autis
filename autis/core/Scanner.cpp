@@ -33,7 +33,7 @@
 #include <cctype>
 #include <limits>
 
-#include "Scanner.h"
+#include "Scanner.hpp"
 #include "../../libs/exception/except/except.hpp"
 
 

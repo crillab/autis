@@ -127,7 +127,7 @@ file(GLOB_RECURSE SOURCES
 
 
 file(GLOB_RECURSE HEADERS
-        ${PROJECT_SOURCE_DIR}/autis/**.hpp ${PROJECT_SOURCE_DIR}/autis/**.h
+        ${PROJECT_SOURCE_DIR}/autis/**.hpp
         )
 
 # Adding other library
@@ -145,13 +145,6 @@ include_directories(${JNI_INCLUDE_DIRS})
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} xcsp3parser universe exception libeasyjni)
-
-# Adding a target for a sample program
-add_executable(main apps/main.cpp)
-target_link_libraries(main ${LIBRARY_NAME})
-
-add_executable(main2 apps/main_cnf.cpp)
-target_link_libraries(main ${LIBRARY_NAME})
 
 
 if (WIN32)

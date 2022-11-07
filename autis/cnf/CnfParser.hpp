@@ -32,10 +32,10 @@
 
 
 
-#ifndef AUTIS_CNFPARSER_H
-#define AUTIS_CNFPARSER_H
+#ifndef AUTIS_CNFPARSER_HPP
+#define AUTIS_CNFPARSER_HPP
 
-#include "../core/AbstractParser.h"
+#include "../core/AbstractParser.hpp"
 #include "../../libs/universe/universe/include/sat/IUniverseSatSolver.hpp"
 namespace Autis {
 

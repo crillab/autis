@@ -30,8 +30,8 @@
 * @license GNU LGPL 3
 */
 
-#ifndef AUTIS_SCANNER_H
-#define AUTIS_SCANNER_H
+#ifndef AUTIS_SCANNER_HPP
+#define AUTIS_SCANNER_HPP
 
 #include <istream>
 #include "../../libs/universe/universe/include/core/UniverseType.hpp"

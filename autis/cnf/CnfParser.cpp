@@ -30,7 +30,7 @@
 */
 
 
-#include "CnfParser.h"
+#include "CnfParser.hpp"
 #include "../../libs/exception/except/except.hpp"
 
 using namespace std;

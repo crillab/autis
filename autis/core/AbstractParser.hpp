@@ -30,13 +30,13 @@
 * @license GNU LGPL 3
 */
 
-#ifndef AUTIS_ABSTRACTPARSER_H
-#define AUTIS_ABSTRACTPARSER_H
+#ifndef AUTIS_ABSTRACTPARSER_HPP
+#define AUTIS_ABSTRACTPARSER_HPP
 
 #include <istream>
 #include <memory>
 
-#include "Scanner.h"
+#include "Scanner.hpp"
 #include "../../libs/universe/universe/include/core/IUniverseSolver.hpp"
 
 namespace Autis {
