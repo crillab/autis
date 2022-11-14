@@ -12,6 +12,9 @@ set(PROJECT_DESCRIPTION "autis: Opening wriTing and readIng instanceS")
 
 set(LIBRARY_NAME autis)
 
+option(COMPILE_GMP "If this option is enabled, Universe will be compiled with the GMP library for handling large numbers. When off BigInteger is an alias for long long. " Off)
+
+
 # configure GCC/MSVC/Clang  command
 if (NOT MSVC)
     message(STATUS "Not msvc")
@@ -140,11 +143,24 @@ include_directories(libs/xcsp3-cpp-parser/include)
 find_package(JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
+if(COMPILE_GMP)
+    if (GMP_INCLUDE_DIR)
+        include_directories(${GMP_INCLUDE_DIR})
+    endif()
+    add_definitions("-DGMP_INCLUDE")
+endif()
+
 
 # Adding the library to the build targets.
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} ${LIBXML2_LIBRARIES} xcsp3parser universe exception libeasyjni)
+
+if(COMPILE_GMP)
+    if (GMP_LIBRARY_DIR)
+        target_link_libraries(${LIBRARY_NAME} ${GMP_LIBRARY_DIR})
+    endif()
+endif()
 
 if (WIN32)
     install(TARGETS ${LIBRARY_NAME}

@@ -28,8 +28,9 @@
  * @license This project is released under the GNU LGPL3 License.
  */
 
-#include "../../libs/universe/universe/include/csp/UniverseJavaCspSolver.hpp"
 #include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreParser.h"
+#include "../../libs/universe/universe/include/csp/UniverseJavaCspSolver.hpp"
+
 
 #include "AutisXcspCallback.hpp"
 #include "AutisJavaXcspCallback.hpp"

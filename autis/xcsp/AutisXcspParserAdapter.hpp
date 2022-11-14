@@ -34,6 +34,8 @@
 #include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
 #include "../core/AbstractParser.hpp"
+#include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreCallbacks.h"
+#include "AutisXcspCallback.hpp"
 
 namespace Autis {
 
