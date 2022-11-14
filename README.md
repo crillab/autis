@@ -20,7 +20,7 @@ Currently, the following are supported:
 
 ## Build 
 
-The latest release is available [here]()
+The latest release is available [here](https://github.com/crillab/autis/releases/latest)
 
 `AUTIS` is developed using [C++ 17](https://en.cppreference.com/w/cpp/17), 
 [CMake 3.23](https://cmake.org/). 

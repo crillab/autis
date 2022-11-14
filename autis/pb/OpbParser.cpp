@@ -29,7 +29,7 @@
 * @license GNU LGPL 3
 */
 
-#include "OpbParser.h"
+#include "OpbParser.hpp"
 #include "../../libs/exception/except/except.hpp"
 
 using namespace std;

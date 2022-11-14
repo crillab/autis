@@ -19,8 +19,8 @@
  ******************************************************************************/
 
 /**
-* @file AutisUniverseCspSolverDecorator.hpp
-* @brief
+* @file parser.h
+* @brief This file represents the header for the parse function.
 * @author Thibault Falque
 * @author Romain Wallon
 * @version 0.1.0
@@ -30,55 +30,34 @@
 */
 
 
-#ifndef AUTIS_AUTISUNIVERSECSPSOLVERDECORATOR_HPP
-#define AUTIS_AUTISUNIVERSECSPSOLVERDECORATOR_HPP
+#ifndef AUTIS_PARSER_HPP
+#define AUTIS_PARSER_HPP
 
-#include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
+#include <string>
 
+#include "../../libs/universe/universe/include/utils/ISolverFactory.hpp"
 namespace Autis {
 
-/**
-* @class AutisUniverseCspSolverDecorator
-* @brief 
-*/
-    class AutisUniverseCspSolverDecorator: public Universe::IUniverseSolver {
-    public:
-        AutisUniverseCspSolverDecorator(Universe::IUniverseSolver *solver, FILE *in);
+    /**
+     * @fn parse(const std::string &path, Universe::ISolverFactory &listener)
+     * @brief Parses the file at the given path to read the formula to solve.
+     * The format of the input file may be CNF or OPB.
+     *
+     * @param path The path of the file to parse.
+     * @param listener The listener to notify while parsing.
+     */
+    Universe::IUniverseSolver * parse(const std::string &path, Universe::ISolverFactory &listener);
 
-        ~AutisUniverseCspSolverDecorator() override =default ;
+    /**
+     * @fn parse(std::istream &input, Universe::ISolverFactory &factory)
+     * @brief Parses the given input stream to read the formula to solve.
+     * The format of the input may be CNF or OPB.
+     *
+     * @param input The input stream to parse.
+     * @param factory The listener to notify while parsing.
+     */
+    Universe::IUniverseSolver * parse(std::istream &input, Universe::ISolverFactory &factory);
 
-        void parse();
+}
 
-        Universe::UniverseSolverResult solve() override;
-
-        Universe::UniverseSolverResult solve(std::string filename) override;
-        Universe::UniverseSolverResult solve(std::vector<Universe::UniverseAssumption<Universe::BigInteger>> assumpts) override;
-
-        void interrupt() override;
-
-        void setVerbosity(int level) override;
-
-        void setTimeout(long seconds) override;
-
-        void setTimeoutMs(long mseconds) override;
-
-        void reset() override;
-
-        int nVariables() override;
-
-        int nConstraints() override;
-
-        void setLogFile(const std::string &filename) override;
-
-        std::vector<Universe::BigInteger> solution() override;
-
-
-
-    private:
-        Universe::IUniverseSolver* solver;
-        FILE* in;
-    };
-
-} // Autis
-
-#endif //AUTIS_AUTISUNIVERSECSPSOLVERDECORATOR_HPP
+#endif

@@ -31,10 +31,10 @@
 
 #include <memory>
 
-#include "../cnf/CnfParser.h"
-#include "../pb/OpbParser.h"
-#include "Scanner.h"
-#include "parser.h"
+#include "../cnf/CnfParser.hpp"
+#include "../pb/OpbParser.hpp"
+#include "Scanner.hpp"
+#include "parser.hpp"
 #include "../xcsp/AutisXcspParserAdapter.hpp"
 #include "../../libs/exception/except/except.hpp"
 

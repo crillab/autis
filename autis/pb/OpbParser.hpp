@@ -29,14 +29,14 @@
 * @license GNU LGPL 3
 */
 
-#ifndef AUTIS_OPBPARSER_H
-#define AUTIS_OPBPARSER_H
+#ifndef AUTIS_OPBPARSER_HPP
+#define AUTIS_OPBPARSER_HPP
 
 #include <fstream>
 #include <string>
 #include <vector>
 
-#include "../core/AbstractParser.h"
+#include "../core/AbstractParser.hpp"
 #include "../../libs/universe/universe/include/pb/IUniversePseudoBooleanSolver.hpp"
 
 namespace Autis {
