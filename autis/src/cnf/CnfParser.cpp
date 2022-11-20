@@ -1,51 +1,51 @@
 /******************************************************************************
- * AUTIS, a library for parsing combinatorial problems.                       *
- * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
- * This library is free software; you can redistribute it andor               *
- * modify it under the terms of the GNU Lesser General Public                 *
- * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.           *
+ * This library is free software; you can redistribute it and/or modify it    *
+ * under the terms of the GNU Lesser General Public License as published by   *
+ * the Free Software Foundation; either version 3 of the License, or (at your *
+ * option) any later version.                                                 *
  *                                                                            *
- * This library is distributed in the hope that it will be useful,            *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * This library is distributed in the hope that it will be useful, but        *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY *
+ * or FITNESS FOR A PARTICULAR PURPOSE.                                       *
  * See the GNU Lesser General Public License for more details.                *
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see http//:www.gnu.org/licenses.                                   *
+ * If not, see http://www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
 /**
-* @file CnfParser.cpp
-* @brief This file represents the definition of the methods of the class CNFParser for parsing Dimacs CNF File.
-* @author Thibault Falque
-* @author Romain Wallon
-* @version 0.1.0
-* @date 24/10/2022
-* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
-* @license GNU LGPL 3
-*/
+ * @file CnfParser.cpp
+ * @brief Defines the parser for parsing CNF problems (in the DIMACS format).
+ * @author Thibault Falque
+ * @author Romain Wallon
+ * @date 24/10/22
+ * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
+ * @license This project is released under the GNU LGPL3 License.
+ */
 
-
-#include "../../include/cnf/CnfParser.hpp"
 #include "../../../libs/exception/except/except.hpp"
 
-using namespace std;
-using namespace Autis;
+#include "../../include/cnf/CnfParser.hpp"
 
-CnfParser::CnfParser(Scanner &scanner, Universe::IUniverseSatSolver *solver) :
+using namespace Autis;
+using namespace Except;
+using namespace std;
+using namespace Universe;
+
+CnfParser::CnfParser(Scanner &scanner, IUniverseSatSolver *solver) :
         AbstractParser(scanner, solver) {
-    // Nothing to do: all fields are already initialized.
+    // Nothing to do: everything already initialized.
 }
 
 void CnfParser::parse() {
+    vector<int> clause;
     bool inClause = false;
     int nbClausesRead = 0;
-
-    std::vector<int> clause;
 
     for (char next; scanner.look(next);) {
         if (next == 'c') {
@@ -89,12 +89,10 @@ void CnfParser::parse() {
 
     if (nbClausesRead != numberOfConstraints) {
         // The number of read clauses is not the expected one.
-        throw Except::ParseException("Unexpected number of clauses");
+        throw ParseException("Unexpected number of clauses");
     }
 }
 
-Universe::IUniverseSatSolver *CnfParser::getConcreteSolver() {
-    return dynamic_cast<Universe::IUniverseSatSolver *>(AbstractParser::getConcreteSolver());
+IUniverseSatSolver *CnfParser::getConcreteSolver() {
+    return dynamic_cast<IUniverseSatSolver *>(AbstractParser::getConcreteSolver());
 }
-
-

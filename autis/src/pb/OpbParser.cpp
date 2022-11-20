@@ -1,47 +1,48 @@
 /******************************************************************************
- * AUTIS, a library for parsing combinatorial problems.                       *
- * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
- * This library is free software; you can redistribute it andor               *
- * modify it under the terms of the GNU Lesser General Public                 *
- * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.         *
+ * This library is free software; you can redistribute it and/or modify it    *
+ * under the terms of the GNU Lesser General Public License as published by   *
+ * the Free Software Foundation; either version 3 of the License, or (at your *
+ * option) any later version.                                                 *
  *                                                                            *
- * This library is distributed in the hope that it will be useful,            *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * This library is distributed in the hope that it will be useful, but        *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY *
+ * or FITNESS FOR A PARTICULAR PURPOSE.                                       *
  * See the GNU Lesser General Public License for more details.                *
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see http//:www.gnu.org/licenses.                                   *
+ * If not, see http://www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
 /**
-* @file OpbParser.cpp
-* @brief This file represents the definition of the OpbParser class.
-* @author Thibault Falque
-* @author Romain Wallon
-* @version 0.1.0
-* @date 24/10/2022
-* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
-* @license GNU LGPL 3
-*/
+ * @file OpbParser.cpp
+ * @brief Defines the parser for parsing pseudo-Boolean problems (in the OPB format).
+ * @author Thibault Falque
+ * @author Romain Wallon
+ * @date 24/10/22
+ * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
+ * @license This project is released under the GNU LGPL3 License.
+ */
 
-#include "../../include/pb/OpbParser.hpp"
 #include "../../../libs/exception/except/except.hpp"
 
-using namespace std;
-using namespace Autis;
+#include "../../include/pb/OpbParser.hpp"
 
-OpbParser::OpbParser(Scanner &scanner, Universe::IUniversePseudoBooleanSolver *solver) :
+using namespace Autis;
+using namespace Except;
+using namespace std;
+using namespace Universe;
+
+OpbParser::OpbParser(Scanner &scanner, IUniversePseudoBooleanSolver *solver) :
         AbstractParser(scanner, solver) {
-    // Nothing to do: all fields are already initialized.
+    // Nothing to do: everything is already initialized.
 }
 
 void OpbParser::parse() {
-
     // Reading the header of the file.
     readMetaData();
     skipComments();
@@ -64,16 +65,15 @@ void OpbParser::parse() {
 
     if (nbConstraintsRead != numberOfConstraints) {
         // The number of read constraints is not the expected one.
-        throw Except::ParseException("Unexpected number of constraints");
+        throw ParseException("Unexpected number of constraints");
     }
-
 }
 
 void OpbParser::readMetaData()  {
     // Checking that the first line is a comment.
     char c = scanner.read();
     if (c != '*') {
-        throw Except::ParseException("Metadata line expected");
+        throw ParseException("Metadata line expected");
     }
 
     // Reading the metadata of the input.
@@ -82,7 +82,6 @@ void OpbParser::readMetaData()  {
 
     // Ignoring the rest of the line.
     scanner.skipLine();
-
 }
 
 void OpbParser::skipComments() {
@@ -101,17 +100,18 @@ void OpbParser::readObjective() {
 
     // Reading the objective function.
     if ((scanner.read() == 'm') && (scanner.read() == 'i') && (scanner.read() == 'n') && (scanner.read() == ':')) {
-        throw Except::UnsupportedOperationException("Objective function not supported.");
+        throw UnsupportedOperationException("Objective function not supported");
+
     } else {
         // The "min" keyword was expected but is not present.
-        throw Except::ParseException("Keyword `min:' expected");
+        throw ParseException("Keyword `min:' expected");
     }
 }
 
 void OpbParser::readConstraint() {
+    vector<int> literals;
+    vector<BigInteger> coefficients;
 
-    std::vector<int> literals;
-    std::vector<Universe::BigInteger> coefficients;
     for (char c; scanner.look(c);) {
         if ((c == '>') || (c == '=')) {
             // This is the relational operator.
@@ -120,20 +120,21 @@ void OpbParser::readConstraint() {
 
         if ((c != '-') && (c != '+') && (!isdigit(c))) {
             // A number should have been here.
-            throw Except::ParseException("Number expected");
+            throw ParseException("Number expected");
         }
 
         // Reading the next term of the constraint.
         vector<int> term;
-        Universe::BigInteger coefficient;
+        BigInteger coefficient;
         readTerm(coefficient, term);
         if (term.size() == 1) {
             // This is a simple term.
             literals.push_back(term[0]);
             coefficients.push_back(coefficient);
+            
         } else {
             // This is a product of term.
-            throw Except::UnsupportedOperationException("Non linear constraints are not supported.");
+            throw UnsupportedOperationException("Non linear constraints are not supported");
         }
     }
 
@@ -142,34 +143,36 @@ void OpbParser::readConstraint() {
     readRelationalOperator(s);
 
     // Reading the degree.
-    Universe::BigInteger degree;
+    BigInteger degree;
     scanner.read(degree);
 
-    // Looking for the semi-colon.
+    // Looking for the semicolon.
     char c;
     if ((!scanner.look(c)) || (c != ';')) {
-        throw Except::ParseException("Semi-colon expected at end of constraint");
+        throw ParseException("Semi-colon expected at end of constraint");
     }
 
     // Ending the constraint.
     // We need to consume the ';' character.
     (void) scanner.read();
-    if(s=="="){
-        getConcreteSolver()->addExactly(literals,coefficients,degree);
-    }else if(s==">=" ){
-        getConcreteSolver()->addAtLeast(literals,coefficients,degree);
-    }else{
-        getConcreteSolver()->addAtMost(literals,coefficients,degree);
+
+    // Checking the relational operator to identify the type of the constraint.
+    if (s == "=") {
+        getConcreteSolver()->addExactly(literals, coefficients, degree);
+
+    } else if (s == ">=") {
+        getConcreteSolver()->addAtLeast(literals, coefficients, degree);
+
+    } else {
+        getConcreteSolver()->addAtMost(literals, coefficients, degree);
     }
 }
 
-void OpbParser::readTerm(Universe::BigInteger &coefficient, vector<int> &literals) {
+void OpbParser::readTerm(BigInteger &coefficient, vector<int> &literals) {
     scanner.read(coefficient);
-
     while (readIdentifier(literals));
-
     if (literals.empty()) {
-        throw Except::ParseException("Literal identifier expected");
+        throw ParseException("Literal identifier expected");
     }
 }
 
@@ -190,7 +193,7 @@ bool OpbParser::readIdentifier(vector<int> &literals) {
 
         // Reading the 'x' symbol.
         if ((scanner.look(c)) || (c != 'x')) {
-            throw Except::ParseException("Symbol `x' expected");
+            throw ParseException("Symbol `x' expected");
         }
     }
 
@@ -226,11 +229,10 @@ void OpbParser::readRelationalOperator(string &relationalOperator) {
         relationalOperator = "<=";
 
     } else {
-        throw Except::ParseException("Unrecognized relational operator");
+        throw ParseException("Unrecognized relational operator");
     }
 }
 
-Universe::IUniversePseudoBooleanSolver *OpbParser::getConcreteSolver() {
-    return dynamic_cast<Universe::IUniversePseudoBooleanSolver *>(AbstractParser::getConcreteSolver());
+IUniversePseudoBooleanSolver *OpbParser::getConcreteSolver() {
+    return dynamic_cast<IUniversePseudoBooleanSolver *>(AbstractParser::getConcreteSolver());
 }
-

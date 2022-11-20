@@ -1,57 +1,58 @@
 /******************************************************************************
- * AUTIS, a library for parsing combinatorial problems.                       *
- * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
- * This library is free software; you can redistribute it andor               *
- * modify it under the terms of the GNU Lesser General Public                 *
- * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.         *
+ * This library is free software; you can redistribute it and/or modify it    *
+ * under the terms of the GNU Lesser General Public License as published by   *
+ * the Free Software Foundation; either version 3 of the License, or (at your *
+ * option) any later version.                                                 *
  *                                                                            *
- * This library is distributed in the hope that it will be useful,            *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * This library is distributed in the hope that it will be useful, but        *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY *
+ * or FITNESS FOR A PARTICULAR PURPOSE.                                       *
  * See the GNU Lesser General Public License for more details.                *
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see http//:www.gnu.org/licenses.                                   *
+ * If not, see http://www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
 /**
-* @file AbstractParser.cpp
-* @brief This file represents the definition of the abstract class AbstractParser.
-* @author Thibault Falque
-* @author Romain Wallon
-* @version 0.1.0
-* @date 24/10/2022
-* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
-* @license GNU LGPL 3
-*/
+ * @file AbstractParser.cpp
+ * @brief Defines the base class for all parsers implemented in Autis.
+ * @author Thibault Falque
+ * @author Romain Wallon
+ * @date 24/10/22
+ * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
+ * @license This project is released under the GNU LGPL3 License.
+ */
 
-#include "../../include/core/AbstractParser.hpp"
 #include "../../../libs/exception/except/except.hpp"
 
+#include "../../include/core/AbstractParser.hpp"
 
-using namespace std;
 using namespace Autis;
+using namespace Except;
+using namespace std;
+using namespace Universe;
 
-AbstractParser::AbstractParser(Scanner &scanner, Universe::IUniverseSolver* solver) :
+AbstractParser::AbstractParser(Scanner &scanner, IUniverseSolver *solver) :
         scanner(scanner),
         solver(solver),
         numberOfVariables(0),
         numberOfConstraints(0) {
-    // Nothing to do: all fields are already initialized.
+    // Nothing to do: everything is already initialized.
 }
 
 int AbstractParser::checkLiteral(int literal) const {
     int variable = abs(literal);
     if ((variable == 0) || (variable > numberOfVariables)) {
-        throw Except::ParseException("An invalid literal has been read");
+        throw ParseException("An invalid literal has been read");
     }
     return literal;
 }
 
-Universe::IUniverseSolver *AbstractParser::getConcreteSolver() {
+IUniverseSolver *AbstractParser::getConcreteSolver() {
     return solver;
 }

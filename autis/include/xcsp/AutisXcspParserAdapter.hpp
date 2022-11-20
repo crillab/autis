@@ -1,5 +1,5 @@
 /******************************************************************************
- * AUTIS, a library for parsing combinatorial problems.                       *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
  * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
@@ -20,10 +20,10 @@
 
 /**
  * @file AutisXCSPParserAdapter.hpp
- * @brief Defines a parser adapting the callback defined in XCSP3-CPP-Parser.
+ * @brief Defines the parser for parsing XCSP3 problems (in the OPB format).
  * @author Thibault Falque
  * @author Romain Wallon
- * @date 19/09/2022
+ * @date 24/10/22
  * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
  * @license This project is released under the GNU LGPL3 License.
  */
@@ -32,10 +32,12 @@
 #define AUTIS_AUTISXCSPPARSERADAPTER_HPP
 
 #include "../../../libs/xcsp3-cpp-parser/include/XCSP3CoreCallbacks.h"
+
 #include "../../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
-#include "AutisXcspCallback.hpp"
 #include "../core/AbstractParser.hpp"
+
+#include "AutisXcspCallback.hpp"
 
 namespace Autis {
 
@@ -43,7 +45,7 @@ namespace Autis {
      * The AutisXCSPParserAdapter class defines an adapter for the callback interface
      * defined in XCSP3-CPP-Parser, to use it as an AbstractParser.
      */
-    class AutisXCSPParserAdapter : public AbstractParser {
+    class AutisXCSPParserAdapter : public Autis::AbstractParser {
 
     private:
 
@@ -61,11 +63,11 @@ namespace Autis {
          * @param solver The solver to feed while parsing the instance.
          * @param callback The callback to use when parsing the input instance.
          */
-        AutisXCSPParserAdapter(Autis::Scanner &scanner, Universe::IUniverseCspSolver *solver,
-                               XCSP3Core::XCSP3CoreCallbacks *callback = nullptr);
+        explicit AutisXCSPParserAdapter(Autis::Scanner &scanner, Universe::IUniverseCspSolver *solver,
+                XCSP3Core::XCSP3CoreCallbacks *callback = nullptr);
 
         /**
-         * Parses the input instance, and feeds the associated solver with the read constraints.
+         * Parses the input to read the problem to solve.
          */
         void parse() override;
 
@@ -80,9 +82,9 @@ namespace Autis {
         virtual Autis::AutisXcspCallback *getCallback();
 
         /**
-         * Gives the CSP solver to feed while parsing.
+         * Gives the CSP solver to feed while parsing the input.
          *
-         * @return The CSP solver to feed.
+         * @return The solver to feed.
          */
         Universe::IUniverseCspSolver *getConcreteSolver() override;
 

@@ -1,52 +1,45 @@
 /******************************************************************************
- * AUTIS, a library for parsing combinatorial problems.                       *
- * Copyright (c) 2022 - Exakis Nelite, Univ Artois & CNRS.                    *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
+ * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
- * This library is free software; you can redistribute it andor               *
- * modify it under the terms of the GNU Lesser General Public                 *
- * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.         *
+ * This library is free software; you can redistribute it and/or modify it    *
+ * under the terms of the GNU Lesser General Public License as published by   *
+ * the Free Software Foundation; either version 3 of the License, or (at your *
+ * option) any later version.                                                 *
  *                                                                            *
- * This library is distributed in the hope that it will be useful,            *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * This library is distributed in the hope that it will be useful, but        *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY *
+ * or FITNESS FOR A PARTICULAR PURPOSE.                                       *
  * See the GNU Lesser General Public License for more details.                *
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see http//:www.gnu.org/licenses.                                   *
+ * If not, see http://www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
-
 /**
-* @file AbstractParser.h
-* @brief This file represents the header of the abstract class AbstractParser.
-* @author Thibault Falque
-* @author Romain Wallon
-* @version 0.1.0
-* @date 24/10/2022
-* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
-* @license GNU LGPL 3
-*/
+ * @file AbstractParser.hpp
+ * @brief Defines the base class for all parsers implemented in Autis.
+ * @author Thibault Falque
+ * @author Romain Wallon
+ * @date 24/10/22
+ * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
+ * @license This project is released under the GNU LGPL3 License.
+ */
 
 #ifndef AUTIS_ABSTRACTPARSER_HPP
 #define AUTIS_ABSTRACTPARSER_HPP
 
-#include <istream>
-#include <memory>
+#include "../../../libs/universe/universe/include/core/IUniverseSolver.hpp"
 
 #include "Scanner.hpp"
-#include "../../../libs/universe/universe/include/core/IUniverseSolver.hpp"
 
 namespace Autis {
 
     /**
-     * @class AbstractParser
-     * @brief The AbstractParser is the parent class of classes used to parse
-     * input streams so as to read a problem to solve.
-     *
-     * @version 0.1.0
+     * The AbstractParser is the parent class of classes used to parse input streams
+     * so as to read a problem to solve.
      */
     class AbstractParser {
 
@@ -58,7 +51,7 @@ namespace Autis {
         Autis::Scanner &scanner;
 
         /**
-         * The listener to notify while parsing.
+         * The solver to feed while parsing.
          */
         Universe::IUniverseSolver* solver;
 
@@ -72,20 +65,32 @@ namespace Autis {
          */
         int numberOfConstraints;
 
-        /**
-         * @fn AbstractParser(Autis::Scanner &scanner, Universe::IUniverseSolver* solver)
-         * @brief Creates a new parser which uses the given scanner and notifies
-         * the given listener.
-         *
-         * @param scanner The scanner used to read the input stream.
-         * @param solver The solver to notify.
-         */
-        explicit AbstractParser(Autis::Scanner &scanner,
-                                Universe::IUniverseSolver* solver);
+    protected:
 
         /**
-         * @fn checkLiteral(int literal)
-         * @brief Checks whether the given literal is correct w.r.t. the expected
+         * Creates a new AbstractParser.
+         *
+         * @param scanner The scanner used to read the input stream.
+         * @param solver The solver to feed while parsing the instance.
+         */
+        explicit AbstractParser(Autis::Scanner &scanner, Universe::IUniverseSolver* solver);
+
+    public:
+
+        /**
+         * Destroys this AbstractParser.
+         */
+        virtual ~AbstractParser() = default;
+
+        /**
+         * Parses the input to read the problem to solve.
+         */
+        virtual void parse() = 0;
+
+    protected:
+
+        /**
+         * Checks whether the given literal is correct w.r.t. the expected
          * number of variables.
          *
          * @param literal The literal to check.
@@ -94,19 +99,12 @@ namespace Autis {
          */
         [[nodiscard]] int checkLiteral(int literal) const;
 
-
-        virtual Universe::IUniverseSolver* getConcreteSolver();
-
-
-    public:
-
         /**
-         * @fn parse()
-         * @brief Parses the input to read the problem to solve.
+         * Gives the concrete solver to feed while parsing the input.
+         *
+         * @return The solver to feed.
          */
-        virtual void parse() = 0;
-
-        virtual ~AbstractParser()=default;
+        virtual Universe::IUniverseSolver *getConcreteSolver();
 
     };
 

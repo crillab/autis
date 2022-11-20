@@ -1,5 +1,5 @@
 /******************************************************************************
- * AUTIS, a library for parsing combinatorial problems.                       *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
  * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
@@ -20,28 +20,27 @@
 
 /**
  * @file AutisXCSPParserAdapter.cpp
- * @brief Defines a parser adapting the callback defined in XCSP3-CPP-Parser.
+ * @brief Defines the parser for parsing XCSP3 problems (in the OPB format).
  * @author Thibault Falque
  * @author Romain Wallon
- * @date 19/09/2022
+ * @date 24/10/22
  * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
  * @license This project is released under the GNU LGPL3 License.
  */
 
 #include "XCSP3CoreParser.h"
+
 #include "../../../libs/universe/universe/include/csp/UniverseJavaCspSolver.hpp"
 
 #include "../../include/xcsp/AutisXcspCallback.hpp"
-#include "../../include/xcsp/AutisJavaXcspCallback.hpp"
-#include "../../include/xcsp/AutisNativeXcspCallback.hpp"
 #include "../../include/xcsp/AutisXcspParserAdapter.hpp"
 
 using namespace Autis;
 using namespace Universe;
 using namespace XCSP3Core;
 
-AutisXCSPParserAdapter::AutisXCSPParserAdapter(Scanner &scanner,
-                                               IUniverseCspSolver *solver, XCSP3CoreCallbacks *callback) :
+AutisXCSPParserAdapter::AutisXCSPParserAdapter(
+        Scanner &scanner, IUniverseCspSolver *solver, XCSP3CoreCallbacks *callback) :
         AbstractParser(scanner, solver),
         callback(callback) {
     // Nothing to do: everything is already initialized.
@@ -68,11 +67,11 @@ Autis::AutisXcspCallback *AutisXCSPParserAdapter::getCallback() {
 
     if (javaSolver == nullptr) {
         // The solver is not a Java solver: using a native callback.
-        return new AutisNativeXcspCallback(concreteSolver);
+        return AutisXcspCallback::newNativeInstance(concreteSolver);
     }
 
-    // The solver is a Java solver: using a dedicated callback.
-    return new AutisJavaXcspCallback(javaSolver);
+    // The solver is a Java solver: using a java callback.
+    return AutisXcspCallback::newJavaInstance(javaSolver);
 }
 
 IUniverseCspSolver *AutisXCSPParserAdapter::getConcreteSolver() {

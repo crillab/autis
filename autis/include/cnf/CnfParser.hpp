@@ -1,75 +1,75 @@
 /******************************************************************************
- * AUTIS - Opening wriTing and readIng instanceS                               *
+ * AUTIS, A Unified Tool for parsIng problemS                                 *
  * Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.                   *
  * All rights reserved.                                                       *
  *                                                                            *
- * This library is free software; you can redistribute it andor               *
- * modify it under the terms of the GNU Lesser General Public                 *
- * License as published by the Free Software Foundation; either               *
- * version 3 of the License, or (at your option) any later version.           *
+ * This library is free software; you can redistribute it and/or modify it    *
+ * under the terms of the GNU Lesser General Public License as published by   *
+ * the Free Software Foundation; either version 3 of the License, or (at your *
+ * option) any later version.                                                 *
  *                                                                            *
- * This library is distributed in the hope that it will be useful,            *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ * This library is distributed in the hope that it will be useful, but        *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY *
+ * or FITNESS FOR A PARTICULAR PURPOSE.                                       *
  * See the GNU Lesser General Public License for more details.                *
  *                                                                            *
  * You should have received a copy of the GNU Lesser General Public           *
  * License along with this library.                                           *
- * If not, see {@link http:www.gnu.orglicenses}.                              *
+ * If not, see http://www.gnu.org/licenses.                                   *
  ******************************************************************************/
 
-
 /**
-* @file CnfParser.h
-* @brief This file represents the header of the class CNFParser for parsing Dimacs CNF File.
-* @author Thibault Falque
-* @author Romain Wallon
-* @version 0.1.0
-* @date 24/10/2022
-* @copyright Copyright (c) 2022 Exakis Nelite, Univ Artois & CNRS All rights reserved.
-* @license GNU LGPL 3
-*/
-
-
+ * @file CnfParser.hpp
+ * @brief Defines the parser for parsing CNF problems (in the DIMACS format).
+ * @author Thibault Falque
+ * @author Romain Wallon
+ * @date 24/10/22
+ * @copyright Copyright (c) 2022 - Univ Artois & CNRS & Exakis Nelite.
+ * @license This project is released under the GNU LGPL3 License.
+ */
 
 #ifndef AUTIS_CNFPARSER_HPP
 #define AUTIS_CNFPARSER_HPP
 
-#include "../core/AbstractParser.hpp"
 #include "../../../libs/universe/universe/include/sat/IUniverseSatSolver.hpp"
+
+#include "../core/AbstractParser.hpp"
+
 namespace Autis {
 
     /**
-     * @class CNFParser
-     * @brief The CnfParser specializes AbstractParser to read inputs written
+     * The CnfParser specializes AbstractParser to read inputs written
      * using the CNF format.
-     *
-     * @version 0.1.0
      */
     class CnfParser : public Autis::AbstractParser {
 
     public:
 
         /**
-         * @fn CnfParser(Autis::Scanner &scanner, Universe::IUniverseSatSolver *listener)
-         * @brief Creates a new CnfParser which uses the given scanner and notifies
-         * the given listener.
+         * Creates a new CnfParser.
          *
          * @param scanner The scanner used to read the input stream.
-         * @param listener The listener to notify.
+         * @param solver The solver to feed while parsing the instance.
          */
-        explicit CnfParser(Autis::Scanner &scanner, Universe::IUniverseSatSolver *listener);
+        explicit CnfParser(Autis::Scanner &scanner, Universe::IUniverseSatSolver *solver);
 
         /**
-         * @fn parse()
-         * @brief Parses the input to read the problem to solve.
+         * Destroys this CnfParser.
+         */
+        ~CnfParser() override = default;
+
+        /**
+         * Parses the input to read the problem to solve.
          */
         void parse() override;
 
-
-        virtual ~CnfParser()=default;
-
     protected:
+
+        /**
+         * Gives the SAT solver to feed while parsing the input.
+         *
+         * @return The solver to feed.
+         */
         Universe::IUniverseSatSolver *getConcreteSolver() override;
 
     };
