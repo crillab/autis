@@ -28,9 +28,9 @@
  * @license This project is released under the GNU LGPL3 License.
  */
 
-#include "../../libs/universe/universe/include/csp/intension/UniverseJavaIntensionConstraintFactory.hpp"
+#include "../../include/xcsp/AutisJavaXcspCallback.hpp"
+#include "../../../libs/universe/universe/include/csp/intension/UniverseJavaIntensionConstraintFactory.hpp"
 
-#include "AutisJavaXcspCallback.hpp"
 
 using namespace Autis;
 using namespace Universe;

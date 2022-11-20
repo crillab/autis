@@ -33,8 +33,8 @@
 #include <cctype>
 #include <limits>
 
-#include "Scanner.hpp"
-#include "../../libs/exception/except/except.hpp"
+#include "../../include/core/Scanner.hpp"
+#include "../../../libs/exception/except/except.hpp"
 
 
 using namespace std;

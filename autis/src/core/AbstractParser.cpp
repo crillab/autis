@@ -19,8 +19,8 @@
  ******************************************************************************/
 
 /**
-* @file parser.h
-* @brief This file represents the header for the parse function.
+* @file AbstractParser.cpp
+* @brief This file represents the definition of the abstract class AbstractParser.
 * @author Thibault Falque
 * @author Romain Wallon
 * @version 0.1.0
@@ -29,35 +29,29 @@
 * @license GNU LGPL 3
 */
 
+#include "../../include/core/AbstractParser.hpp"
+#include "../../../libs/exception/except/except.hpp"
 
-#ifndef AUTIS_PARSER_HPP
-#define AUTIS_PARSER_HPP
 
-#include <string>
+using namespace std;
+using namespace Autis;
 
-#include "../../libs/universe/universe/include/utils/ISolverFactory.hpp"
-namespace Autis {
-
-    /**
-     * @fn parse(const std::string &path, Universe::ISolverFactory &listener)
-     * @brief Parses the file at the given path to read the formula to solve.
-     * The format of the input file may be CNF or OPB.
-     *
-     * @param path The path of the file to parse.
-     * @param listener The listener to notify while parsing.
-     */
-    Universe::IUniverseSolver * parse(const std::string &path, Universe::ISolverFactory &listener);
-
-    /**
-     * @fn parse(std::istream &input, Universe::ISolverFactory &factory)
-     * @brief Parses the given input stream to read the formula to solve.
-     * The format of the input may be CNF or OPB.
-     *
-     * @param input The input stream to parse.
-     * @param factory The listener to notify while parsing.
-     */
-    Universe::IUniverseSolver * parse(std::istream &input, Universe::ISolverFactory &factory);
-
+AbstractParser::AbstractParser(Scanner &scanner, Universe::IUniverseSolver* solver) :
+        scanner(scanner),
+        solver(solver),
+        numberOfVariables(0),
+        numberOfConstraints(0) {
+    // Nothing to do: all fields are already initialized.
 }
 
-#endif
+int AbstractParser::checkLiteral(int literal) const {
+    int variable = abs(literal);
+    if ((variable == 0) || (variable > numberOfVariables)) {
+        throw Except::ParseException("An invalid literal has been read");
+    }
+    return literal;
+}
+
+Universe::IUniverseSolver *AbstractParser::getConcreteSolver() {
+    return solver;
+}

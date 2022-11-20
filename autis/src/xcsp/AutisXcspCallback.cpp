@@ -28,7 +28,7 @@
  * @license This project is released under the GNU LGPL3 License.
  */
 
-#include "AutisXcspCallback.hpp"
+#include "../../include/xcsp/AutisXcspCallback.hpp"
 #include "../../../libs/universe/universe/include/csp/intension/UniverseJavaIntensionConstraintFactory.hpp"
 
 using namespace XCSP3Core;

@@ -31,12 +31,12 @@
 
 #include <memory>
 
-#include "../cnf/CnfParser.hpp"
-#include "../pb/OpbParser.hpp"
-#include "Scanner.hpp"
-#include "parser.hpp"
-#include "../xcsp/AutisXcspParserAdapter.hpp"
-#include "../../libs/exception/except/except.hpp"
+#include "../../include/cnf/CnfParser.hpp"
+#include "../../include/pb/OpbParser.hpp"
+#include "../../include/core/Scanner.hpp"
+#include "../../include/core/parser.hpp"
+#include "../../include/xcsp/AutisXcspParserAdapter.hpp"
+#include "../../../libs/exception/except/except.hpp"
 
 
 using namespace std;

@@ -37,7 +37,7 @@
 #include <vector>
 
 #include "../core/AbstractParser.hpp"
-#include "../../libs/universe/universe/include/pb/IUniversePseudoBooleanSolver.hpp"
+#include "../../../libs/universe/universe/include/pb/IUniversePseudoBooleanSolver.hpp"
 
 namespace Autis {
 

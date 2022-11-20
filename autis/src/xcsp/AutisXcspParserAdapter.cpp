@@ -28,13 +28,13 @@
  * @license This project is released under the GNU LGPL3 License.
  */
 
-#include "../../libs/universe/universe/include/csp/UniverseJavaCspSolver.hpp"
-#include "../../libs/xcsp3-cpp-parser/include/XCSP3CoreParser.h"
+#include "XCSP3CoreParser.h"
+#include "../../../libs/universe/universe/include/csp/UniverseJavaCspSolver.hpp"
 
-#include "AutisXcspCallback.hpp"
-#include "AutisJavaXcspCallback.hpp"
-#include "AutisNativeXcspCallback.hpp"
-#include "AutisXcspParserAdapter.hpp"
+#include "../../include/xcsp/AutisXcspCallback.hpp"
+#include "../../include/xcsp/AutisJavaXcspCallback.hpp"
+#include "../../include/xcsp/AutisNativeXcspCallback.hpp"
+#include "../../include/xcsp/AutisXcspParserAdapter.hpp"
 
 using namespace Autis;
 using namespace Universe;

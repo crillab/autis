@@ -37,7 +37,7 @@
 #include <memory>
 
 #include "Scanner.hpp"
-#include "../../libs/universe/universe/include/core/IUniverseSolver.hpp"
+#include "../../../libs/universe/universe/include/core/IUniverseSolver.hpp"
 
 namespace Autis {
 

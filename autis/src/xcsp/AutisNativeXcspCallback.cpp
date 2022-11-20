@@ -28,9 +28,9 @@
  * @license This project is released under the GNU LGPL3 License.
  */
 
-#include "../../libs/universe/universe/include/csp/intension/UniverseIntensionConstraintFactory.hpp"
+#include "../../../libs/universe/universe/include/csp/intension/UniverseIntensionConstraintFactory.hpp"
 
-#include "AutisNativeXcspCallback.hpp"
+#include "../../include/xcsp/AutisNativeXcspCallback.hpp"
 
 using namespace Autis;
 using namespace Universe;

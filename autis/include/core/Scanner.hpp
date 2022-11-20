@@ -34,7 +34,7 @@
 #define AUTIS_SCANNER_HPP
 
 #include <istream>
-#include "../../libs/universe/universe/include/core/UniverseType.hpp"
+#include "../../../libs/universe/universe/include/core/UniverseType.hpp"
 
 namespace Autis {
 

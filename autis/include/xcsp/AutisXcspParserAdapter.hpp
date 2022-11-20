@@ -31,8 +31,10 @@
 #ifndef AUTIS_AUTISXCSPPARSERADAPTER_HPP
 #define AUTIS_AUTISXCSPPARSERADAPTER_HPP
 
-#include "../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
+#include "../../../libs/xcsp3-cpp-parser/include/XCSP3CoreCallbacks.h"
+#include "../../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
+#include "AutisXcspCallback.hpp"
 #include "../core/AbstractParser.hpp"
 
 namespace Autis {

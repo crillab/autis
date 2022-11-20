@@ -30,8 +30,8 @@
 */
 
 
-#include "CnfParser.hpp"
-#include "../../libs/exception/except/except.hpp"
+#include "../../include/cnf/CnfParser.hpp"
+#include "../../../libs/exception/except/except.hpp"
 
 using namespace std;
 using namespace Autis;

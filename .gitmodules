@@ -6,4 +6,5 @@
 	url = https://github.com/thibaultfalque/XCSP3-CPP-Parser
 [submodule "libs/universe"]
 	path = libs/universe
-	url = https://github.com/crillab/universe.git
+	url = ../universe.git
+	branch = develop
