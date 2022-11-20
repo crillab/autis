@@ -36,6 +36,7 @@
 #include "../../../libs/universe/universe/include/csp/IUniverseCspSolver.hpp"
 
 #include "../core/AbstractParser.hpp"
+#include "AutisXcspCallback.hpp"
 
 #include "AutisXcspCallback.hpp"
 
