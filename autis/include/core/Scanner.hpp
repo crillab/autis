@@ -100,7 +100,7 @@ namespace Autis {
          *
          * @param value The variable in which to store the read value.
          */
-        void read(Universe::BigInteger &value);
+        void readBig(Universe::BigInteger &value);
 
         /**
          * Skips the next line in the input stream.

@@ -144,7 +144,7 @@ void OpbParser::readConstraint() {
 
     // Reading the degree.
     BigInteger degree;
-    scanner.read(degree);
+    scanner.readBig(degree);
 
     // Looking for the semicolon.
     char c;
@@ -169,7 +169,7 @@ void OpbParser::readConstraint() {
 }
 
 void OpbParser::readTerm(BigInteger &coefficient, vector<int> &literals) {
-    scanner.read(coefficient);
+    scanner.readBig(coefficient);
     while (readIdentifier(literals));
     if (literals.empty()) {
         throw ParseException("Literal identifier expected");

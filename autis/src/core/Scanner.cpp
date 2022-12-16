@@ -70,12 +70,12 @@ char Scanner::read() {
 }
 
 void Scanner::read(int &value) {
-    long long longValue = 0LL;
-    read(longValue);
+    BigInteger longValue = 0LL;
+    readBig(longValue);
     value = (int) longValue;
 }
 
-void Scanner::read(BigInteger &value) {
+void Scanner::readBig(BigInteger &value) {
     char c;
     int sign = 1;
 
