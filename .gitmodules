@@ -1,0 +1,9 @@
+[submodule "libs/exception"]
+	path = libs/exception
+	url = https://github.com/crillab/except.git
+[submodule "libs/xcsp3-cpp-parser"]
+	path = libs/xcsp3-cpp-parser
+	url = https://github.com/thibaultfalque/XCSP3-CPP-Parser
+[submodule "libs/universe"]
+	path = libs/universe
+	url = https://github.com/crillab/universe
