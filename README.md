@@ -3,7 +3,7 @@
 License|Linux & macOS Build|Windows Build|SonarCloud
 :--:|:--:|:--:|:--:
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)|[![Build Status](https://github.com/crillab/autis/actions/workflows/autis_ci.yml/badge.svg)](https://github.com/crillab/autis/actions/workflows/autis_ci.yml)|||
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)|[![Build Status UNIX MAC](https://github.com/crillab/autis/actions/workflows/cmake.yml/badge.svg)](https://github.com/crillab/autis/actions/workflows/cmake.yml)|[![Build Status](https://github.com/crillab/autis/actions/workflows/cmake_windows.yml/badge.svg)](https://github.com/crillab/autis/actions/workflows/cmake_windows.yml)||
 
 ## Description 
 
