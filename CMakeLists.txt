@@ -154,7 +154,7 @@ endif()
 # Adding the library to the build targets.
 add_library(${LIBRARY_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} ${LIBXML2_LIBRARIES} xcsp3parser universe exception libeasyjni)
+target_link_libraries(${LIBRARY_NAME} ${JNI_LIBRARIES} ${LIBXML2_LIBRARIES} xcsp3parser universe exception easyjni)
 
 if(COMPILE_GMP)
     if (GMP_LIBRARY_DIR)

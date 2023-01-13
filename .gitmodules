@@ -7,4 +7,4 @@
 [submodule "libs/universe"]
 	path = libs/universe
 	url = ../universe.git
-	branch = develop
+	branch = main
