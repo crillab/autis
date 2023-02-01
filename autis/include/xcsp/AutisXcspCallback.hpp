@@ -56,6 +56,8 @@ namespace Autis {
          */
         Universe::AbstractUniverseIntensionConstraintFactory *intensionFactory;
 
+        bool optimization;
+
     private:
 
         /**
@@ -213,6 +215,8 @@ namespace Autis {
          */
         void buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
                  std::vector<XCSP3Core::XVariable *> &list, std::vector<int> &coefs) override;
+
+        void beginInstance(XCSP3Core::InstanceType type) override;
 
     private:
 

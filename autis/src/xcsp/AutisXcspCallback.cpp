@@ -52,6 +52,10 @@ AutisXcspCallback::AutisXcspCallback(IUniverseCspSolver *solver,
     intensionUsingString = false;
 }
 
+void AutisXcspCallback::beginInstance(InstanceType type) {
+    optimization = type == XCSP3Core::COP;
+}
+
 AutisXcspCallback *AutisXcspCallback::newNativeInstance(IUniverseCspSolver *solver) {
     return new AutisXcspCallback(solver, new UniverseIntensionConstraintFactory());
 }
