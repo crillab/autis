@@ -46,7 +46,8 @@ namespace Autis {
      * using the OPB format.
      */
     class OpbParser : public Autis::AbstractParser {
-
+    private:
+        bool optimization;
     public:
 
         /**
@@ -67,6 +68,8 @@ namespace Autis {
          * Parses the input to read the problem to solve.
          */
         void parse() override;
+
+        bool isOptimization() override;
 
     private:
 

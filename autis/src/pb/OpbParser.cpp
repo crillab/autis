@@ -100,6 +100,7 @@ void OpbParser::readObjective() {
 
     // Reading the objective function.
     if ((scanner.read() == 'm') && (scanner.read() == 'i') && (scanner.read() == 'n') && (scanner.read() == ':')) {
+        optimization=true;
         throw UnsupportedOperationException("Objective function not supported");
 
     } else {
@@ -235,4 +236,8 @@ void OpbParser::readRelationalOperator(string &relationalOperator) {
 
 IUniversePseudoBooleanSolver *OpbParser::getConcreteSolver() {
     return dynamic_cast<IUniversePseudoBooleanSolver *>(AbstractParser::getConcreteSolver());
+}
+
+bool OpbParser::isOptimization() {
+    return optimization;
 }

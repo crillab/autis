@@ -56,3 +56,7 @@ int AbstractParser::checkLiteral(int literal) const {
 IUniverseSolver *AbstractParser::getConcreteSolver() {
     return solver;
 }
+
+bool AbstractParser::isOptimization() {
+    return false;
+}

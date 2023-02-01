@@ -55,6 +55,8 @@ namespace Autis {
          */
         XCSP3Core::XCSP3CoreCallbacks *callback;
 
+        bool optimization;
+
     public:
 
         /**
@@ -71,6 +73,8 @@ namespace Autis {
          * Parses the input to read the problem to solve.
          */
         void parse() override;
+
+        bool isOptimization() override;
 
     protected:
 

@@ -82,6 +82,8 @@ namespace Autis {
          */
         virtual ~AbstractParser() = default;
 
+        virtual bool isOptimization();
+
         /**
          * Parses the input to read the problem to solve.
          */

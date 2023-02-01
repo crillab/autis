@@ -77,3 +77,7 @@ Autis::AutisXcspCallback *AutisXCSPParserAdapter::getCallback() {
 IUniverseCspSolver *AutisXCSPParserAdapter::getConcreteSolver() {
     return dynamic_cast<IUniverseCspSolver *>(AbstractParser::getConcreteSolver());
 }
+
+bool AutisXCSPParserAdapter::isOptimization() {
+    return AbstractParser::isOptimization();
+}
