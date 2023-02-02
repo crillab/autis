@@ -28,21 +28,19 @@
  * @license This project is released under the GNU LGPL3 License.
  */
 
-#include "XCSP3CoreParser.h"
+#include "../../include/xcsp/AutisXcspParserAdapter.hpp"
 
 #include "../../../libs/universe/universe/include/csp/UniverseJavaCspSolver.hpp"
-
 #include "../../include/xcsp/AutisXcspCallback.hpp"
-#include "../../include/xcsp/AutisXcspParserAdapter.hpp"
+#include "XCSP3CoreParser.h"
 
 using namespace Autis;
 using namespace Universe;
 using namespace XCSP3Core;
 
 AutisXCSPParserAdapter::AutisXCSPParserAdapter(
-        Scanner &scanner, IUniverseCspSolver *solver, XCSP3CoreCallbacks *callback) :
-        AbstractParser(scanner, solver),
-        callback(callback) {
+    Scanner &scanner, IUniverseCspSolver *solver, XCSP3CoreCallbacks *callback) : AbstractParser(scanner, solver),
+                                                                                  callback(callback) {
     // Nothing to do: everything is already initialized.
 }
 
@@ -52,12 +50,14 @@ void AutisXCSPParserAdapter::parse() {
         AutisXcspCallback *cb = getCallback();
         XCSP3CoreParser parser(cb);
         parser.parse(scanner.getInput());
+        optimization = parser.isOptimization();
         delete cb;
 
     } else {
         // Using the specified callback to parse the input.
         XCSP3CoreParser parser(callback);
         parser.parse(scanner.getInput());
+        optimization = parser.isOptimization();
     }
 }
 
@@ -79,5 +79,5 @@ IUniverseCspSolver *AutisXCSPParserAdapter::getConcreteSolver() {
 }
 
 bool AutisXCSPParserAdapter::isOptimization() {
-    return AbstractParser::isOptimization();
+    return optimization;
 }
