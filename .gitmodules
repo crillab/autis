@@ -7,3 +7,4 @@
 [submodule "libs/universe"]
 	path = libs/universe
 	url = https://github.com/crillab/universe
+	branch = main
