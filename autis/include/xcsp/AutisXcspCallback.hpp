@@ -55,6 +55,8 @@ class AutisXcspCallback : public XCSP3Core::XCSP3CoreCallbacks {
 
     bool optimization;
 
+    std::vector<std::vector<int>> lastTuples;
+
    private:
     /**
      * Creates a new AutisXcspCallback.
@@ -1493,7 +1495,9 @@ class AutisXcspCallback : public XCSP3Core::XCSP3CoreCallbacks {
      */
     void buildObjectiveMaximize(XCSP3Core::ExpressionObjective type, std::vector<XCSP3Core::Tree *> &trees) override;
 
-   private:
+    void buildConstraintExtensionAs(string id, vector<XCSP3Core::XVariable *> list, bool support, bool hasStar) override;
+
+private:
     /**
      * Determines the relational operator used in the given condition object.
      *

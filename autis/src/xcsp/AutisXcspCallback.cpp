@@ -77,7 +77,8 @@ void AutisXcspCallback::buildConstraintIntension(string id, Tree *tree) {
 void AutisXcspCallback::buildConstraintExtension(
     string id, XVariable *variable, vector<int> &tuples, bool support, bool hasStar) {
     if (hasStar) {
-        throw UnsupportedOperationException("Starred tuples are not supported");
+        //todo possible ?
+        return;
     }
 
     if (support) {
@@ -89,15 +90,18 @@ void AutisXcspCallback::buildConstraintExtension(
 
 void AutisXcspCallback::buildConstraintExtension(
     string id, vector<XVariable *> list, vector<vector<int>> &tuples, bool support, bool hasStar) {
-    if (hasStar) {
-        throw UnsupportedOperationException("Starred tuples are not supported");
-    }
+    lastTuples=tuples;
 
     if (support) {
-        solver->addSupport(toStringVector(list), toBigIntegerMatrix(tuples));
+        solver->addSupport(toStringVector(list), toBigIntegerMatrix(tuples),hasStar);
     } else {
-        solver->addConflicts(toStringVector(list), toBigIntegerMatrix(tuples));
+        solver->addConflicts(toStringVector(list), toBigIntegerMatrix(tuples),hasStar);
     }
+}
+
+
+void AutisXcspCallback::buildConstraintExtensionAs(string id, vector<XVariable *> list, bool support, bool hasStar) {
+    buildConstraintExtension(id,list,lastTuples,support,hasStar);
 }
 
 void AutisXcspCallback::buildConstraintSum(
