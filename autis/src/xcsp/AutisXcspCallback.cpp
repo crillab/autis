@@ -82,9 +82,9 @@ void AutisXcspCallback::buildConstraintExtension(
     }
 
     if (support) {
-        solver->addSupport(variable->id, toBigIntegerVector(tuples));
+        solver->addSupport(variable->id, toBigIntegerVector(tuples),hasStar);
     } else {
-        solver->addConflicts(variable->id, toBigIntegerVector(tuples));
+        solver->addConflicts(variable->id, toBigIntegerVector(tuples),hasStar);
     }
 }
 
