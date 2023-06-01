@@ -75,21 +75,21 @@ void AutisXcspCallback::buildConstraintIntension(string id, Tree *tree) {
 }
 
 void AutisXcspCallback::buildConstraintExtension(
-    string id, XVariable *variable, vector<int> &tuples, bool support, bool hasStar) {
+        string id, XVariable *variable, vector<int> &tuples, bool support, bool hasStar) {
     if (hasStar) {
         //todo possible ?
         return;
     }
 
     if (support) {
-        solver->addSupport(variable->id, toBigIntegerVector(tuples));
+        solver->addSupport(variable->id, toBigIntegerVector(tuples),hasStar);
     } else {
-        solver->addConflicts(variable->id, toBigIntegerVector(tuples));
+        solver->addConflicts(variable->id, toBigIntegerVector(tuples),hasStar);
     }
 }
 
 void AutisXcspCallback::buildConstraintExtension(
-    string id, vector<XVariable *> list, vector<vector<int>> &tuples, bool support, bool hasStar) {
+        string id, vector<XVariable *> list, vector<vector<int>> &tuples, bool support, bool hasStar) {
     lastTuples=tuples;
 
     if (support) {
@@ -105,7 +105,7 @@ void AutisXcspCallback::buildConstraintExtensionAs(string id, vector<XVariable *
 }
 
 void AutisXcspCallback::buildConstraintSum(
-    string id, vector<XVariable *> &list, XCondition &cond) {
+        string id, vector<XVariable *> &list, XCondition &cond) {
     if (cond.operandType == XCSP3Core::INTEGER) {
         solver->addSum(toStringVector(list), operatorOf(cond), cond.val);
 
@@ -118,7 +118,7 @@ void AutisXcspCallback::buildConstraintSum(
 }
 
 void AutisXcspCallback::buildConstraintSum(
-    string id, vector<XVariable *> &list, vector<int> &coeffs, XCondition &cond) {
+        string id, vector<XVariable *> &list, vector<int> &coeffs, XCondition &cond) {
     if (cond.operandType == XCSP3Core::INTEGER) {
         solver->addSum(toStringVector(list), toBigIntegerVector(coeffs), operatorOf(cond), cond.val);
 
@@ -131,14 +131,14 @@ void AutisXcspCallback::buildConstraintSum(
 }
 
 void AutisXcspCallback::buildConstraintSum(
-    string id, vector<XVariable *> &list, vector<XVariable *> &coeffs, XCondition &cond) {
+        string id, vector<XVariable *> &list, vector<XVariable *> &coeffs, XCondition &cond) {
     if (cond.operandType == XCSP3Core::INTEGER) {
         solver->addSumWithVariableCoefficients(
-            toStringVector(list), toStringVector(coeffs), operatorOf(cond), cond.val);
+                toStringVector(list), toStringVector(coeffs), operatorOf(cond), cond.val);
 
     } else if (cond.operandType == XCSP3Core::VARIABLE) {
         solver->addSumWithVariableCoefficients(
-            toStringVector(list), toStringVector(coeffs), operatorOf(cond), cond.var);
+                toStringVector(list), toStringVector(coeffs), operatorOf(cond), cond.var);
 
     } else {
         throw UnsupportedOperationException("Unsupported condition type");
@@ -146,14 +146,14 @@ void AutisXcspCallback::buildConstraintSum(
 }
 
 void AutisXcspCallback::buildConstraintSum(
-    string id, vector<Tree *> &trees, XCondition &cond) {
+        string id, vector<Tree *> &trees, XCondition &cond) {
     if (cond.operandType == XCSP3Core::INTEGER) {
         solver->addSumIntension(
-            toIntensionConstraintVector(trees), operatorOf(cond), cond.val);
+                toIntensionConstraintVector(trees), operatorOf(cond), cond.val);
 
     } else if (cond.operandType == XCSP3Core::VARIABLE) {
         solver->addSumIntension(
-            toIntensionConstraintVector(trees), operatorOf(cond), cond.var);
+                toIntensionConstraintVector(trees), operatorOf(cond), cond.var);
 
     } else {
         throw UnsupportedOperationException("Unsupported condition type");
@@ -161,14 +161,14 @@ void AutisXcspCallback::buildConstraintSum(
 }
 
 void AutisXcspCallback::buildConstraintSum(
-    string id, vector<Tree *> &trees, vector<int> &coefs, XCondition &cond) {
+        string id, vector<Tree *> &trees, vector<int> &coefs, XCondition &cond) {
     if (cond.operandType == XCSP3Core::INTEGER) {
         solver->addSumIntension(
-            toIntensionConstraintVector(trees), toBigIntegerVector(coefs), operatorOf(cond), cond.val);
+                toIntensionConstraintVector(trees), toBigIntegerVector(coefs), operatorOf(cond), cond.val);
 
     } else if (cond.operandType == XCSP3Core::VARIABLE) {
         solver->addSumIntension(
-            toIntensionConstraintVector(trees), toBigIntegerVector(coefs), operatorOf(cond), cond.var);
+                toIntensionConstraintVector(trees), toBigIntegerVector(coefs), operatorOf(cond), cond.var);
 
     } else {
         throw UnsupportedOperationException("Unsupported condition type");
@@ -176,7 +176,7 @@ void AutisXcspCallback::buildConstraintSum(
 }
 
 void AutisXcspCallback::buildObjectiveMaximize(
-    ExpressionObjective type, vector<XVariable *> &list, vector<int> &coefs) {
+        ExpressionObjective type, vector<XVariable *> &list, vector<int> &coefs) {
     if (type == ExpressionObjective::LEX_O) {
         throw UnsupportedOperationException("LEX objective are not supported");
     } else if (type == ExpressionObjective::MAXIMUM_O) {
@@ -402,7 +402,7 @@ vector<BigInteger> AutisXcspCallback::toBigIntegerVector(const vector<int> &inte
 }
 
 vector<IUniverseIntensionConstraint *> AutisXcspCallback::toIntensionConstraintVector(
-    const vector<Tree *> &expressions) {
+        const vector<Tree *> &expressions) {
     vector<IUniverseIntensionConstraint *> lists;
     for (auto expr : expressions) {
         lists.push_back(createIntension(expr->root));
@@ -695,16 +695,16 @@ void AutisXcspCallback::buildConstraintMaximum(std::string id, vector<XCSP3Core:
 }
 
 void AutisXcspCallback::buildConstraintElement(std::string id, vector<XCSP3Core::XVariable *> &list, int value) {
-    solver->addElement(toStringVector(list), value);
+    solver->addElement(toStringVector(list),Universe::UniverseRelationalOperator::EQ, value);
 }
 
 void AutisXcspCallback::buildConstraintElement(std::string id, vector<XCSP3Core::XVariable *> &list,
                                                XCSP3Core::XVariable *index, int startIndex, XCondition &xc) {
     if (xc.operandType == XCSP3Core::INTEGER) {
-        solver->addElement(toStringVector(list), startIndex, index->id, xc.val);
+        solver->addElement(toStringVector(list), startIndex, index->id, asRelationalOperator(xc.op), xc.val);
 
     } else if (xc.operandType == XCSP3Core::VARIABLE) {
-        solver->addElement(toStringVector(list), startIndex, index->id, xc.var);
+        solver->addElement(toStringVector(list), startIndex, index->id,asRelationalOperator(xc.op), xc.var);
 
     } else {
         throw UnsupportedOperationException("Unsupported condition type");
@@ -714,24 +714,26 @@ void AutisXcspCallback::buildConstraintElement(std::string id, vector<XCSP3Core:
 void AutisXcspCallback::buildConstraintElement(std::string id, vector<std::vector<XCSP3Core::XVariable *>> &matrix,
                                                int startRowIndex, XCSP3Core::XVariable *rowIndex, int startColIndex,
                                                XCSP3Core::XVariable *colIndex, XCSP3Core::XVariable *value) {
-    solver->addElementMatrix(toStringMatrix(matrix), startRowIndex, rowIndex->id, startColIndex, colIndex->id, value->id);
+    solver->addElementMatrix(toStringMatrix(matrix), startRowIndex, rowIndex->id, startColIndex, colIndex->id,Universe::UniverseRelationalOperator::EQ, value->id);
 }
+
+
 
 void AutisXcspCallback::buildConstraintElement(std::string id, vector<std::vector<XCSP3Core::XVariable *>> &matrix,
                                                int startRowIndex, XCSP3Core::XVariable *rowIndex, int startColIndex,
                                                XCSP3Core::XVariable *colIndex, int value) {
-    solver->addElementMatrix(toStringMatrix(matrix), startRowIndex, rowIndex->id, startColIndex, colIndex->id, value);
+    solver->addElementMatrix(toStringMatrix(matrix), startRowIndex, rowIndex->id, startColIndex, colIndex->id, Universe::UniverseRelationalOperator::EQ,value);
 }
 
 void AutisXcspCallback::buildConstraintElement(std::string id, vector<std::vector<int>> &matrix, int startRowIndex,
                                                XCSP3Core::XVariable *rowIndex, int startColIndex,
                                                XCSP3Core::XVariable *colIndex, XCSP3Core::XVariable *value) {
-    solver->addElementConstantMatrix(toBigIntegerMatrix(matrix), startRowIndex, rowIndex->id, startColIndex, colIndex->id, value->id);
+    solver->addElementConstantMatrix(toBigIntegerMatrix(matrix), startRowIndex, rowIndex->id, startColIndex, colIndex->id, Universe::UniverseRelationalOperator::EQ,value->id);
 }
 
 void AutisXcspCallback::buildConstraintElement(std::string id, vector<XCSP3Core::XVariable *> &list,
                                                XCSP3Core::XVariable *value) {
-    solver->addElement(toStringVector(list), value->id);
+    solver->addElement(toStringVector(list), Universe::UniverseRelationalOperator::EQ,value->id);
 }
 
 void AutisXcspCallback::buildConstraintChannel(std::string id, vector<XCSP3Core::XVariable *> &list, int startIndex) {
