@@ -1,0 +1,9 @@
+{
+  "name": "crillab-autis",
+  "version-semver": "0.1.0",
+  "dependencies": [
+      "crillab-except",
+      "crillab-universe",
+      "xcsp3-cpp-parser"
+  ]
+}
