@@ -58,3 +58,4 @@ prefix/
 **/.DS_Store
 CMakeLists.txt.user
 CMakeUserPresets.json
+.hide

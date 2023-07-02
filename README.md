@@ -13,44 +13,52 @@ Currently, the following are supported:
 
 `AUTIS` can feed any solver implementing [the Universe interface](https://github.com/crillab/universe).
 
+## Building from sources
 
 
-## Build 
+### Dependencies
 
-The latest release is available [here](https://github.com/crillab/autis/releases/latest)
+For a list of dependencies, please refer to [vcpkg.json](vcpkg.json).
 
-`AUTIS` is developed using [C++ 17](https://en.cppreference.com/w/cpp/17), 
-[CMake 3.23](https://cmake.org/). 
-Installing CMake is required if you want to build from source.
-To do so, after having installed all the needed tools, you will need to clone
-the project:
+### Build
 
-```bash
-git clone https://github.com/crillab/autis.git --recursive
-cd autis
-mkdir build
-cd build 
-cmake .. -DCMAKE_BUILD_TYPE=RELEASE
-cmake --build . 
+This library is designed for simplified use in projects using `CMake` and [`vcpkg`](https://vcpkg.io/en/).
+
+```sh
+git clone https://github.com/crillab/autis
+cd autis 
+cmake -S . -B build -D -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
+cmake --build build
 ```
 
-## Using CMake
+With `vcpkg_root` is the path to your vcpkg install folder. 
 
-This library is designed for simplified use in projects using CMake. To use this project, it is possible to 
-create a sub-module in your project with the following commands:
 
-```bash
-git submodule add https://github.com/crillab/autis libs/autis
-git submodule update --remote --recursive --init
+### Using as dependencies with vcpkg
+
+We assume that you have configured the registry of `crillab`, see [here](https://crillab.github.io/tootatis/utility) for more information. 
+
+Add `crillab-autis` in your `vcpkg.json` file :
+
+```json
+"dependencies": [
+      "crillab-autis"
+      .....
+  ]
 ```
 
-And then add the following instructions in your CMakeLists.txt file:
+Find package `crillab-autis` in your `CMakeLists.txt`:
 
 ```cmake
-add_subdirectory(libs/autis)
-add_executable(your_solver solver.h solver.cpp)
-target_link_libraries(your_solver autis)
+find_package(crillab-autis REQUIRED)
 ```
+
+Finally, link the library to your target:
+
+```cmake
+target_link_libraries(<your_target> crillab-autis::crillab-autis)
+```
+
 
 ## Examples 
 
