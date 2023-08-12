@@ -60,7 +60,7 @@ set_target_properties(
 target_include_directories(
     crillab-autis_crillab-autis ${warning_guard}
     PUBLIC
-    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/>"
 )
 
 target_include_directories(
