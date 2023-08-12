@@ -13,10 +13,17 @@ project(
 include(cmake/project-is-top-level.cmake)
 include(cmake/variables.cmake)
 
+if(MSVC)
+  set(CMAKE_EXE_LINKER_FLAGS
+      "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB")
+endif()
+
 find_package(crillab-easyjni REQUIRED)
 find_package(crillab-universe REQUIRED)
 find_package(crillab-except REQUIRED)
 find_package(xcsp3-cpp-parser REQUIRED)
+find_package(LibXml2 REQUIRED)
+find_package(Iconv REQUIRED)
 
 # ---- Declare library ----
 

@@ -1,19 +1,19 @@
 {
-    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-configuration.schema.json",
-    "registries": [
-      {
-        "kind": "git",
-        "repository": "https://github.com/crillab/vcpkg-registry",
-        "baseline": "1e241c2e1cab85dec0932d963f2d49d29d6c80d2",
-        "packages": [
-          "crillab-*",
-          "xcsp*"
-        ]
-      }
-    ],
-    "default-registry": {
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-configuration.schema.json",
+  "registries": [
+    {
       "kind": "git",
-      "repository": "https://github.com/microsoft/vcpkg",
-      "baseline": "9055f88ba53a99f51e3c733fe9c79703dc23d57d"
+      "repository": "https://github.com/crillab/vcpkg-registry",
+      "baseline": "1e241c2e1cab85dec0932d963f2d49d29d6c80d2",
+      "packages": [
+        "crillab-*",
+        "xcsp*"
+      ]
     }
+  ],
+  "default-registry": {
+    "kind": "git",
+    "repository": "https://github.com/microsoft/vcpkg",
+    "baseline": "9055f88ba53a99f51e3c733fe9c79703dc23d57d"
   }
+}
