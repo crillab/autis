@@ -40,12 +40,12 @@ write_basic_package_version_file(
 if (VCPKG_TARGET_TRIPLET)
 # Allow package maintainers to freely override the path for the configs
 set(
-    crillab-universe_INSTALL_CMAKEDIR "${CMAKE_INSTALL_PREFIX}/share/${package}"
+    crillab-autis_INSTALL_CMAKEDIR "${CMAKE_INSTALL_PREFIX}/share/${package}"
     CACHE PATH "CMake package config location relative to the install prefix"
 )
 else ()
 set(
-    crillab-universe_INSTALL_CMAKEDIR "${CMAKE_INSTALL_INCLUDEDIR}/cmake/${package}"
+    crillab-autis_INSTALL_CMAKEDIR "${CMAKE_INSTALL_INCLUDEDIR}/cmake/${package}"
     CACHE PATH "CMake package config location relative to the install prefix"
 )
 endif()
